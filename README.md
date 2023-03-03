@@ -2,7 +2,7 @@
 
 [pgvector](https://github.com/pgvector/pgvector) examples for Scala
 
-Supports [Slick](https://github.com/slick/slick)
+Supports [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/basics/index.html) and [Slick](https://github.com/slick/slick)
 
 [![Build Status](https://github.com/pgvector/pgvector-scala/workflows/build/badge.svg?branch=master)](https://github.com/pgvector/pgvector-scala/actions)
 
@@ -10,7 +10,42 @@ Supports [Slick](https://github.com/slick/slick)
 
 Follow the instructions for your database library:
 
+- [JDBC](#jdbc)
 - [Slick](#slick)
+
+## JDBC
+
+Create a table
+
+```scala
+val stmt = conn.createStatement()
+stmt.executeUpdate("CREATE TABLE items (embedding vector(3))")
+```
+
+Insert a vector
+
+```scala
+stmt.executeUpdate("INSERT INTO items (embedding) VALUES ('[1,1,1]')")
+```
+
+Get the nearest neighbors
+
+```scala
+val rs = stmt.executeQuery("SELECT * FROM items ORDER BY embedding <-> '[1,1,1]' LIMIT 5")
+while (rs.next()) {
+  println(rs.getString("embedding"))
+}
+```
+
+Add an approximate index
+
+```scala
+stmt.executeUpdate("CREATE INDEX my_index ON items USING ivfflat (embedding vector_l2_ops)")
+```
+
+Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
+
+See a [full example](src/main/scala/JDBC.scala)
 
 ## Slick
 
