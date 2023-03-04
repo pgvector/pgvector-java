@@ -1,19 +1,54 @@
-# pgvector-scala
+# pgvector-java
 
-[pgvector](https://github.com/pgvector/pgvector) examples for Scala
+[pgvector](https://github.com/pgvector/pgvector) examples for Java and Scala
 
 Supports [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/basics/index.html) and [Slick](https://github.com/slick/slick)
 
-[![Build Status](https://github.com/pgvector/pgvector-scala/workflows/build/badge.svg?branch=master)](https://github.com/pgvector/pgvector-scala/actions)
+[![Build Status](https://github.com/pgvector/pgvector-java/workflows/build/badge.svg?branch=master)](https://github.com/pgvector/pgvector-java/actions)
 
 ## Getting Started
 
 Follow the instructions for your database library:
 
-- [JDBC](#jdbc)
+- [JDBC (Java)](#jdbc-java)
+- [JDBC (Scala)](#jdbc-scala)
 - [Slick](#slick)
 
-## JDBC
+## JDBC (Java)
+
+Create a table
+
+```java
+Statement stmt = conn.createStatement();
+stmt.executeUpdate("CREATE TABLE items (embedding vector(3))");
+```
+
+Insert a vector
+
+```java
+stmt.executeUpdate("INSERT INTO items (embedding) VALUES ('[1,1,1]')");
+```
+
+Get the nearest neighbors
+
+```java
+ResultSet rs = stmt.executeQuery("SELECT * FROM items ORDER BY embedding <-> '[1,1,1]' LIMIT 5");
+while (rs.next()) {
+    System.out.println(rs.getString("embedding"));
+}
+```
+
+Add an approximate index
+
+```java
+stmt.executeUpdate("CREATE INDEX my_index ON items USING ivfflat (embedding vector_l2_ops)");
+```
+
+Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
+
+See a [full example](src/main/java/JDBCJava.java)
+
+## JDBC (Scala)
 
 Create a table
 
@@ -45,7 +80,7 @@ stmt.executeUpdate("CREATE INDEX my_index ON items USING ivfflat (embedding vect
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
 
-See a [full example](src/main/scala/JDBC.scala)
+See a [full example](src/main/scala/JDBCScala.scala)
 
 ## Slick
 
@@ -86,16 +121,16 @@ See a [full example](src/main/scala/Slick.scala)
 
 Everyone is encouraged to help improve this project. Here are a few ways you can help:
 
-- [Report bugs](https://github.com/pgvector/pgvector-scala/issues)
-- Fix bugs and [submit pull requests](https://github.com/pgvector/pgvector-scala/pulls)
+- [Report bugs](https://github.com/pgvector/pgvector-java/issues)
+- Fix bugs and [submit pull requests](https://github.com/pgvector/pgvector-java/pulls)
 - Write, clarify, or fix documentation
 - Suggest or add new features
 
 To get started with development:
 
 ```sh
-git clone https://github.com/pgvector/pgvector-scala.git
-cd pgvector-scala
-createdb pgvector_scala_test
+git clone https://github.com/pgvector/pgvector-java.git
+cd pgvector-java
+createdb pgvector_java_test
 sbt run
 ```

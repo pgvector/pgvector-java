@@ -1,6 +1,7 @@
 object Main {
   def main(args: Array[String]): Unit = {
-    JDBC.example()
+    JDBCJava.example()
+    JDBCScala.example()
     Slick.example()
   }
 }

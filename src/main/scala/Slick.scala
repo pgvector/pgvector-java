@@ -10,7 +10,7 @@ class Items(tag: Tag) extends Table[(String)](tag, "slick_items") {
 
 object Slick {
   def example(): Unit = {
-    val db = Database.forURL("jdbc:postgresql://localhost:5432/pgvector_scala_test", driver="org.postgresql.Driver")
+    val db = Database.forURL("jdbc:postgresql://localhost:5432/pgvector_java_test", driver="org.postgresql.Driver")
 
     try {
       val items = TableQuery[Items]

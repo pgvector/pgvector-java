@@ -1,8 +1,8 @@
 import java.sql.DriverManager
 
-object JDBC {
+object JDBCScala {
   def example(): Unit = {
-    val conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_scala_test")
+    val conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_java_test")
     val stmt = conn.createStatement()
     stmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector")
     stmt.executeUpdate("DROP TABLE IF EXISTS jdbc_items")
