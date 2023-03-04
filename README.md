@@ -96,14 +96,20 @@ class Items(tag: Tag) extends Table[(String)](tag, "items") {
 Insert a vector
 
 ```scala
-val embedding = "[1,1,1]"
+object Pgvector {
+  def toString(v: List[Float]) = {
+    "[" + v.mkString(",") + "]"
+  }
+}
+
+val embedding = Pgvector.toString(List(1, 1, 1))
 db.run(sqlu"INSERT INTO items (embedding) VALUES ($embedding::vector)")
 ```
 
 Get the nearest neighbors
 
 ```scala
-val embedding = "[1,1,1]"
+val embedding = Pgvector.toString(List(1, 1, 1))
 db.run(sql"SELECT * FROM items ORDER BY embedding <-> $embedding::vector LIMIT 5".as[(String)])
 ```
 

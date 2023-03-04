@@ -8,6 +8,12 @@ class Items(tag: Tag) extends Table[(String)](tag, "slick_items") {
   def * = (embedding)
 }
 
+object Pgvector {
+  def toString(v: List[Float]) = {
+    "[" + v.mkString(",") + "]"
+  }
+}
+
 object Slick {
   def example(): Unit = {
     val db = Database.forURL("jdbc:postgresql://localhost:5432/pgvector_java_test", driver="org.postgresql.Driver")
@@ -24,13 +30,13 @@ object Slick {
 
       val resultFuture = setupFuture.flatMap { _ =>
         // insert
-        val embedding1 = "[1,1,1]"
-        val embedding2 = "[2,2,2]"
-        val embedding3 = "[1,1,2]"
+        val embedding1 = Pgvector.toString(List(1, 1, 1))
+        val embedding2 = Pgvector.toString(List(2, 2, 2))
+        val embedding3 = Pgvector.toString(List(1, 1, 2))
         db.run(sqlu"INSERT INTO slick_items (embedding) VALUES ($embedding1::vector), ($embedding2::vector), ($embedding3::vector)")
       }.flatMap { _ =>
         // select
-        val embedding = "[1,1,1]"
+        val embedding = Pgvector.toString(List(1, 1, 1))
         db.run(sql"SELECT * FROM slick_items ORDER BY embedding <-> $embedding::vector LIMIT 5".as[(String)].map(println))
       }.flatMap { _ =>
         // index
