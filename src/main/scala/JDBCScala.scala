@@ -11,7 +11,7 @@ object JDBCScala {
     stmt.executeUpdate("INSERT INTO jdbc_items (embedding) VALUES ('[1,1,1]'), ('[2,2,2]'), ('[1,1,2]')")
     val rs = stmt.executeQuery("SELECT * FROM jdbc_items ORDER BY embedding <-> '[1,1,1]' LIMIT 5")
     while (rs.next()) {
-      println(rs.getString("embedding"))
+      println(Pgvector.parse(rs.getString("embedding")))
     }
     stmt.executeUpdate("CREATE INDEX jdbc_index ON jdbc_items USING ivfflat (embedding vector_l2_ops)")
     conn.close()
