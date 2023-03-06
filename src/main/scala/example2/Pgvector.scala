@@ -1,4 +1,6 @@
-object PgvectorScala {
+package example2
+
+object Pgvector {
   def toString(v: Array[Float]) = {
     "[" + v.mkString(",") + "]"
   }

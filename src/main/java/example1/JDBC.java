@@ -1,6 +1,8 @@
+package example1;
+
 import java.sql.*;
 
-class JDBCJava {
+public class JDBC {
     public static void example() throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_java_test");
 
@@ -12,13 +14,13 @@ class JDBCJava {
         createStmt.executeUpdate("CREATE TABLE jdbc_items (embedding vector(3))");
 
         PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO jdbc_items (embedding) VALUES (?::vector), (?::vector), (?::vector)");
-        insertStmt.setString(1, PgvectorJava.toString(new float[] {1, 1, 1}));
-        insertStmt.setString(2, PgvectorJava.toString(new float[] {2, 2, 2}));
-        insertStmt.setString(3, PgvectorJava.toString(new float[] {1, 1, 2}));
+        insertStmt.setString(1, Pgvector.toString(new float[] {1, 1, 1}));
+        insertStmt.setString(2, Pgvector.toString(new float[] {2, 2, 2}));
+        insertStmt.setString(3, Pgvector.toString(new float[] {1, 1, 2}));
         insertStmt.executeUpdate();
 
         PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_items ORDER BY embedding <-> ?::vector LIMIT 5");
-        neighborStmt.setString(1, PgvectorJava.toString(new float[] {1, 1, 1}));
+        neighborStmt.setString(1, Pgvector.toString(new float[] {1, 1, 1}));
         ResultSet rs = neighborStmt.executeQuery();
         while (rs.next()) {
             System.out.println(rs.getString("embedding"));

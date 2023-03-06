@@ -1,3 +1,5 @@
+package example2
+
 import scala.concurrent._
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -24,13 +26,13 @@ object Slick {
 
       val resultFuture = setupFuture.flatMap { _ =>
         // insert
-        val embedding1 = PgvectorScala.toString(Array(1, 1, 1))
-        val embedding2 = PgvectorScala.toString(Array(2, 2, 2))
-        val embedding3 = PgvectorScala.toString(Array(1, 1, 2))
+        val embedding1 = Pgvector.toString(Array(1, 1, 1))
+        val embedding2 = Pgvector.toString(Array(2, 2, 2))
+        val embedding3 = Pgvector.toString(Array(1, 1, 2))
         db.run(sqlu"INSERT INTO slick_items (embedding) VALUES ($embedding1::vector), ($embedding2::vector), ($embedding3::vector)")
       }.flatMap { _ =>
         // select
-        val embedding = PgvectorScala.toString(Array(1, 1, 1))
+        val embedding = Pgvector.toString(Array(1, 1, 1))
         db.run(sql"SELECT * FROM slick_items ORDER BY embedding <-> $embedding::vector LIMIT 5".as[(String)].map(println))
       }.flatMap { _ =>
         // index

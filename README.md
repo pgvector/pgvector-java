@@ -51,7 +51,7 @@ indexStmt.executeUpdate("CREATE INDEX my_index ON items USING ivfflat (embedding
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
 
-See a [full example](src/main/java/JDBCJava.java)
+See a [full example](src/main/java/example1/JDBC.java)
 
 ## JDBC (Scala)
 
@@ -90,7 +90,7 @@ indexStmt.executeUpdate("CREATE INDEX my_index ON items USING ivfflat (embedding
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
 
-See a [full example](src/main/scala/JDBCScala.scala)
+See a [full example](src/main/scala/example2/JDBC.scala)
 
 ## Slick
 
@@ -131,7 +131,7 @@ db.run(sqlu"CREATE INDEX my_index ON items USING ivfflat (embedding vector_l2_op
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
 
-See a [full example](src/main/scala/Slick.scala)
+See a [full example](src/main/scala/example2/Slick.scala)
 
 ## Contributing
 
