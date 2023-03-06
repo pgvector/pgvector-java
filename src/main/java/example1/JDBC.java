@@ -1,6 +1,7 @@
 package example1;
 
 import java.sql.*;
+import java.util.Arrays;
 
 public class JDBC {
     public static void example() throws SQLException {
@@ -23,7 +24,7 @@ public class JDBC {
         neighborStmt.setString(1, Pgvector.toString(new float[] {1, 1, 1}));
         ResultSet rs = neighborStmt.executeQuery();
         while (rs.next()) {
-            System.out.println(rs.getString("embedding"));
+            System.out.println(Arrays.toString(Pgvector.parse(rs.getString("embedding"))));
         }
 
         Statement indexStmt = conn.createStatement();
