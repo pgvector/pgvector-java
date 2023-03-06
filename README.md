@@ -34,7 +34,9 @@ insertStmt.executeUpdate();
 Get the nearest neighbors
 
 ```java
-ResultSet rs = stmt.executeQuery("SELECT * FROM items ORDER BY embedding <-> '[1,1,1]' LIMIT 5");
+PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM items ORDER BY embedding <-> ?::vector LIMIT 5");
+neighborStmt.setString(1, "[1,1,1]");
+ResultSet rs = neighborStmt.executeQuery();
 while (rs.next()) {
     System.out.println(rs.getString("embedding"));
 }
@@ -70,7 +72,9 @@ insertStmt.executeUpdate()
 Get the nearest neighbors
 
 ```scala
-val rs = stmt.executeQuery("SELECT * FROM items ORDER BY embedding <-> '[1,1,1]' LIMIT 5")
+val neighborStmt = conn.prepareStatement("SELECT * FROM items ORDER BY embedding <-> ?::vector LIMIT 5")
+neighborStmt.setString(1, "[1,1,1]")
+val rs = neighborStmt.executeQuery()
 while (rs.next()) {
   println(rs.getString("embedding"))
 }

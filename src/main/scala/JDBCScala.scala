@@ -17,7 +17,9 @@ object JDBCScala {
     insertStmt.setString(3, "[1,1,2]")
     insertStmt.executeUpdate()
 
-    val rs = stmt.executeQuery("SELECT * FROM jdbc_items ORDER BY embedding <-> '[1,1,1]' LIMIT 5")
+    val neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_items ORDER BY embedding <-> ?::vector LIMIT 5")
+    neighborStmt.setString(1, "[1,1,1]")
+    val rs = neighborStmt.executeQuery()
     while (rs.next()) {
       println(Pgvector.parse(rs.getString("embedding")))
     }

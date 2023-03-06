@@ -17,7 +17,9 @@ class JDBCJava {
         insertStmt.setString(3, "[1,1,2]");
         insertStmt.executeUpdate();
 
-        ResultSet rs = stmt.executeQuery("SELECT * FROM jdbc_items ORDER BY embedding <-> '[1,1,1]' LIMIT 5");
+        PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_items ORDER BY embedding <-> ?::vector LIMIT 5");
+        neighborStmt.setString(1, "[1,1,1]");
+        ResultSet rs = neighborStmt.executeQuery();
         while (rs.next()) {
             System.out.println(rs.getString("embedding"));
         }
