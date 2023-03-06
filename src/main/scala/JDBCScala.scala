@@ -12,16 +12,16 @@ object JDBCScala {
     createStmt.executeUpdate("CREATE TABLE jdbc_items (embedding vector(3))")
 
     val insertStmt = conn.prepareStatement("INSERT INTO jdbc_items (embedding) VALUES (?::vector), (?::vector), (?::vector)")
-    insertStmt.setString(1, PgvectorScala.toString(List(1, 1, 1)))
-    insertStmt.setString(2, PgvectorScala.toString(List(2, 2, 2)))
-    insertStmt.setString(3, PgvectorScala.toString(List(1, 1, 2)))
+    insertStmt.setString(1, PgvectorScala.toString(Array(1, 1, 1)))
+    insertStmt.setString(2, PgvectorScala.toString(Array(2, 2, 2)))
+    insertStmt.setString(3, PgvectorScala.toString(Array(1, 1, 2)))
     insertStmt.executeUpdate()
 
     val neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_items ORDER BY embedding <-> ?::vector LIMIT 5")
-    neighborStmt.setString(1, PgvectorScala.toString(List(1, 1, 1)))
+    neighborStmt.setString(1, PgvectorScala.toString(Array(1, 1, 1)))
     val rs = neighborStmt.executeQuery()
     while (rs.next()) {
-      println(PgvectorScala.parse(rs.getString("embedding")))
+      println(PgvectorScala.parse(rs.getString("embedding")).toList)
     }
 
     val indexStmt = conn.createStatement()
