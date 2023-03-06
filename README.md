@@ -26,7 +26,9 @@ stmt.executeUpdate("CREATE TABLE items (embedding vector(3))");
 Insert a vector
 
 ```java
-stmt.executeUpdate("INSERT INTO items (embedding) VALUES ('[1,1,1]')");
+PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO items (embedding) VALUES (?::vector)");
+insertStmt.setString(1, "[1,1,1]");
+insertStmt.executeUpdate();
 ```
 
 Get the nearest neighbors
