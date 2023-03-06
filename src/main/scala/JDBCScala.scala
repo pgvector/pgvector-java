@@ -8,7 +8,11 @@ object JDBCScala {
     stmt.executeUpdate("DROP TABLE IF EXISTS jdbc_items")
     stmt.executeUpdate("DROP TABLE IF EXISTS jdbc_items")
     stmt.executeUpdate("CREATE TABLE jdbc_items (embedding vector(3))")
-    stmt.executeUpdate("INSERT INTO jdbc_items (embedding) VALUES ('[1,1,1]'), ('[2,2,2]'), ('[1,1,2]')")
+    val insertStmt = conn.prepareStatement("INSERT INTO jdbc_items (embedding) VALUES (?::vector), (?::vector), (?::vector)")
+    insertStmt.setString(1, "[1,1,1]")
+    insertStmt.setString(2, "[2,2,2]")
+    insertStmt.setString(3, "[1,1,2]")
+    insertStmt.executeUpdate()
     val rs = stmt.executeQuery("SELECT * FROM jdbc_items ORDER BY embedding <-> '[1,1,1]' LIMIT 5")
     while (rs.next()) {
       println(Pgvector.parse(rs.getString("embedding")))
