@@ -19,8 +19,8 @@ Follow the instructions for your database library:
 Create a table
 
 ```java
-Statement stmt = conn.createStatement();
-stmt.executeUpdate("CREATE TABLE items (embedding vector(3))");
+Statement createStmt = conn.createStatement();
+createStmt.executeUpdate("CREATE TABLE items (embedding vector(3))");
 ```
 
 Insert a vector
@@ -45,7 +45,8 @@ while (rs.next()) {
 Add an approximate index
 
 ```java
-stmt.executeUpdate("CREATE INDEX my_index ON items USING ivfflat (embedding vector_l2_ops)");
+Statement indexStmt = conn.createStatement();
+indexStmt.executeUpdate("CREATE INDEX my_index ON items USING ivfflat (embedding vector_l2_ops)");
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
@@ -57,8 +58,8 @@ See a [full example](src/main/java/JDBCJava.java)
 Create a table
 
 ```scala
-val stmt = conn.createStatement()
-stmt.executeUpdate("CREATE TABLE items (embedding vector(3))")
+val createStmt = conn.createStatement()
+createStmt.executeUpdate("CREATE TABLE items (embedding vector(3))")
 ```
 
 Insert a vector
@@ -83,7 +84,8 @@ while (rs.next()) {
 Add an approximate index
 
 ```scala
-stmt.executeUpdate("CREATE INDEX my_index ON items USING ivfflat (embedding vector_l2_ops)")
+val indexStmt = conn.createStatement()
+indexStmt.executeUpdate("CREATE INDEX my_index ON items USING ivfflat (embedding vector_l2_ops)")
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance

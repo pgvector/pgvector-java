@@ -8,8 +8,8 @@ object JDBCScala {
     setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector")
     setupStmt.executeUpdate("DROP TABLE IF EXISTS jdbc_items")
 
-    val stmt = conn.createStatement()
-    stmt.executeUpdate("CREATE TABLE jdbc_items (embedding vector(3))")
+    val createStmt = conn.createStatement()
+    createStmt.executeUpdate("CREATE TABLE jdbc_items (embedding vector(3))")
 
     val insertStmt = conn.prepareStatement("INSERT INTO jdbc_items (embedding) VALUES (?::vector), (?::vector), (?::vector)")
     insertStmt.setString(1, "[1,1,1]")
@@ -24,7 +24,8 @@ object JDBCScala {
       println(Pgvector.parse(rs.getString("embedding")))
     }
 
-    stmt.executeUpdate("CREATE INDEX jdbc_index ON jdbc_items USING ivfflat (embedding vector_l2_ops)")
+    val indexStmt = conn.createStatement()
+    indexStmt.executeUpdate("CREATE INDEX jdbc_index ON jdbc_items USING ivfflat (embedding vector_l2_ops)")
 
     conn.close()
   }
