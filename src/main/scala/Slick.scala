@@ -24,13 +24,13 @@ object Slick {
 
       val resultFuture = setupFuture.flatMap { _ =>
         // insert
-        val embedding1 = Pgvector.toString(List(1, 1, 1))
-        val embedding2 = Pgvector.toString(List(2, 2, 2))
-        val embedding3 = Pgvector.toString(List(1, 1, 2))
+        val embedding1 = PgvectorScala.toString(List(1, 1, 1))
+        val embedding2 = PgvectorScala.toString(List(2, 2, 2))
+        val embedding3 = PgvectorScala.toString(List(1, 1, 2))
         db.run(sqlu"INSERT INTO slick_items (embedding) VALUES ($embedding1::vector), ($embedding2::vector), ($embedding3::vector)")
       }.flatMap { _ =>
         // select
-        val embedding = Pgvector.toString(List(1, 1, 1))
+        val embedding = PgvectorScala.toString(List(1, 1, 1))
         db.run(sql"SELECT * FROM slick_items ORDER BY embedding <-> $embedding::vector LIMIT 5".as[(String)].map(println))
       }.flatMap { _ =>
         // index

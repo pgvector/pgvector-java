@@ -12,13 +12,13 @@ class JDBCJava {
         createStmt.executeUpdate("CREATE TABLE jdbc_items (embedding vector(3))");
 
         PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO jdbc_items (embedding) VALUES (?::vector), (?::vector), (?::vector)");
-        insertStmt.setString(1, "[1,1,1]");
-        insertStmt.setString(2, "[2,2,2]");
-        insertStmt.setString(3, "[1,1,2]");
+        insertStmt.setString(1, PgvectorJava.toString(new float[] {1, 1, 1}));
+        insertStmt.setString(2, PgvectorJava.toString(new float[] {2, 2, 2}));
+        insertStmt.setString(3, PgvectorJava.toString(new float[] {1, 1, 2}));
         insertStmt.executeUpdate();
 
         PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_items ORDER BY embedding <-> ?::vector LIMIT 5");
-        neighborStmt.setString(1, "[1,1,1]");
+        neighborStmt.setString(1, PgvectorJava.toString(new float[] {1, 1, 1}));
         ResultSet rs = neighborStmt.executeQuery();
         while (rs.next()) {
             System.out.println(rs.getString("embedding"));

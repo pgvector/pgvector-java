@@ -1,4 +1,4 @@
-object Pgvector {
+object PgvectorScala {
   def toString(v: List[Float]) = {
     "[" + v.mkString(",") + "]"
   }
