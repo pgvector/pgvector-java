@@ -1,8 +1,6 @@
 package com.pgvector
 
-import org.scalatest.funsuite.AnyFunSuite
-
-class MainTest extends AnyFunSuite {
+class HelloSpec extends munit.FunSuite {
   test("JDBCJava") {
     JDBCJava.example()
   }
