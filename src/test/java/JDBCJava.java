@@ -1,6 +1,5 @@
-import com.pgvector.PGvector;
 import java.sql.*;
-import java.util.Arrays;
+import com.pgvector.PGvector;
 
 public class JDBCJava {
     public static void example() throws SQLException {

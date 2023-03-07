@@ -1,5 +1,5 @@
-import com.pgvector.PGvector
 import java.sql.DriverManager
+import com.pgvector.PGvector
 
 object JDBCScala {
   def example(): Unit = {
