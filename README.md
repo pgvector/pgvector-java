@@ -1,6 +1,6 @@
 # pgvector-java
 
-[pgvector](https://github.com/pgvector/pgvector) examples for Java and Scala
+[pgvector](https://github.com/pgvector/pgvector) support for Java and Scala
 
 Supports [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/basics/index.html) and [Slick](https://github.com/slick/slick)
 

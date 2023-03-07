@@ -1,5 +1,6 @@
 package example2
 
+import com.pgvector.PGvector
 import scala.concurrent._
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -26,13 +27,13 @@ object Slick {
 
       val resultFuture = setupFuture.flatMap { _ =>
         // insert
-        val embedding1 = Pgvector.toString(Array(1, 1, 1))
-        val embedding2 = Pgvector.toString(Array(2, 2, 2))
-        val embedding3 = Pgvector.toString(Array(1, 1, 2))
+        val embedding1 = new PGvector(Array[Float](1, 1, 1)).toString
+        val embedding2 = new PGvector(Array[Float](2, 2, 2)).toString
+        val embedding3 = new PGvector(Array[Float](1, 1, 2)).toString
         db.run(sqlu"INSERT INTO slick_items (embedding) VALUES ($embedding1::vector), ($embedding2::vector), ($embedding3::vector)")
       }.flatMap { _ =>
         // select
-        val embedding = Pgvector.toString(Array(1, 1, 1))
+        val embedding = new PGvector(Array[Float](1, 1, 1)).toString
         db.run(sql"SELECT * FROM slick_items ORDER BY embedding <-> $embedding::vector LIMIT 5".as[(String)].map(println))
       }.flatMap { _ =>
         // index
