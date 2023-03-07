@@ -19,4 +19,4 @@ jobs:
           cd pgvector
           make
           sudo make install
-      - run: sbt run
+      - run: sbt test
