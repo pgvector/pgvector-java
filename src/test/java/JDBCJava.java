@@ -1,10 +1,8 @@
-package example1;
-
 import com.pgvector.PGvector;
 import java.sql.*;
 import java.util.Arrays;
 
-public class JDBC {
+public class JDBCJava {
     public static void example() throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_java_test");
 

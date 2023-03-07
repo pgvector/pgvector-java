@@ -1,5 +1,3 @@
-package example2
-
 import com.pgvector.PGvector
 import scala.concurrent._
 import scala.concurrent.duration._
