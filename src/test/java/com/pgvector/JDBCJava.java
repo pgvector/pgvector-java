@@ -1,3 +1,5 @@
+package com.pgvector;
+
 import java.sql.*;
 import com.pgvector.PGvector;
 

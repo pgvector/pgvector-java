@@ -1,3 +1,5 @@
+package com.pgvector
+
 import java.sql.DriverManager
 import com.pgvector.PGvector
 
