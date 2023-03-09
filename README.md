@@ -14,14 +14,14 @@ For Java, add to `pom.xml` under `<dependencies>`:
 <dependency>
   <groupId>com.pgvector</groupId>
   <artifactId>pgvector</artifactId>
-  <version>0.1.0</version>
+  <version>0.1.1</version>
 </dependency>
 ```
 
 For Scala, add to `build.sbt`:
 
 ```sbt
-libraryDependencies += "com.pgvector" % "pgvector" % "0.1.0"
+libraryDependencies += "com.pgvector" % "pgvector" % "0.1.1"
 ```
 
 And follow the instructions for your database library:
