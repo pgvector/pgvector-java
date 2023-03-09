@@ -8,7 +8,17 @@ Supports [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/basics/index.html) 
 
 ## Getting Started
 
-Add to `build.sbt`:
+For Java, add to `pom.xml` under `<dependencies>`:
+
+```xml
+<dependency>
+  <groupId>com.pgvector</groupId>
+  <artifactId>pgvector</artifactId>
+  <version>0.1.0</version>
+</dependency>
+```
+
+For Scala, add to `build.sbt`:
 
 ```sbt
 libraryDependencies += "com.pgvector" % "pgvector" % "0.1.0"
