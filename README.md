@@ -22,6 +22,18 @@ And follow the instructions for your database library:
 
 ## JDBC (Java)
 
+Import the `PGvector` class
+
+```java
+import com.pgvector.PGvector;
+```
+
+Register the vector type with your connection
+
+```java
+PGvector.addVectorType(conn);
+```
+
 Create a table
 
 ```java
@@ -61,6 +73,18 @@ See a [full example](src/test/java/com/pgvector/JDBCJava.java)
 
 ## JDBC (Scala)
 
+Import the `PGvector` class
+
+```scala
+import com.pgvector.PGvector
+```
+
+Register the vector type with your connection
+
+```scala
+PGvector.addVectorType(conn)
+```
+
 Create a table
 
 ```scala
@@ -71,7 +95,7 @@ createStmt.executeUpdate("CREATE TABLE items (embedding vector(3))")
 Insert a vector
 
 ```scala
-val insertStmt = conn.prepareStatement("INSERT INTO items (embedding) VALUES (?::vector)")
+val insertStmt = conn.prepareStatement("INSERT INTO items (embedding) VALUES (?)")
 insertStmt.setObject(1, new PGvector(Array[Float](1, 1, 1)))
 insertStmt.executeUpdate()
 ```
@@ -79,7 +103,7 @@ insertStmt.executeUpdate()
 Get the nearest neighbors
 
 ```scala
-val neighborStmt = conn.prepareStatement("SELECT * FROM items ORDER BY embedding <-> ?::vector LIMIT 5")
+val neighborStmt = conn.prepareStatement("SELECT * FROM items ORDER BY embedding <-> ? LIMIT 5")
 neighborStmt.setObject(1, new PGvector(Array[Float](1, 1, 1)))
 val rs = neighborStmt.executeQuery()
 while (rs.next()) {
@@ -99,6 +123,12 @@ Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distanc
 See a [full example](src/test/scala/com/pgvector/JDBCScala.scala)
 
 ## Slick
+
+Import the `PGvector` class
+
+```scala
+import com.pgvector.PGvector
+```
 
 Add a vector column
 
