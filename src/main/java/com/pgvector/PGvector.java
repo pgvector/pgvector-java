@@ -7,6 +7,9 @@ import java.util.Arrays;
 import org.postgresql.PGConnection;
 import org.postgresql.util.PGobject;
 
+/**
+ * PGvector class
+ */
 public class PGvector extends PGobject implements Serializable, Cloneable {
     private float[] vec;
 
