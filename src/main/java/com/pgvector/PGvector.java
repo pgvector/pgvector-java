@@ -37,7 +37,7 @@ public class PGvector extends PGobject implements Serializable, Cloneable {
     }
 
     /**
-     * Sets the value from the text representation of a vector
+     * Sets the value from a text representation of a vector
      */
     public void setValue(String s) throws SQLException {
         if (s == null) {
