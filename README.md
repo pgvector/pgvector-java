@@ -44,7 +44,7 @@ PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM items ORDE
 neighborStmt.setObject(1, new PGvector(new float[] {1, 1, 1}));
 ResultSet rs = neighborStmt.executeQuery();
 while (rs.next()) {
-    System.out.println(rs.getString("embedding"));
+    System.out.println((PGvector) rs.getObject(1));
 }
 ```
 
@@ -83,7 +83,7 @@ val neighborStmt = conn.prepareStatement("SELECT * FROM items ORDER BY embedding
 neighborStmt.setObject(1, new PGvector(Array[Float](1, 1, 1)))
 val rs = neighborStmt.executeQuery()
 while (rs.next()) {
-  println(rs.getString("embedding"))
+  println(rs.getObject("embedding").asInstanceOf[PGvector])
 }
 ```
 
