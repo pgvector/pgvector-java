@@ -14,7 +14,8 @@ lazy val root = (project in file("."))
       "com.typesafe.slick" %% "slick" % "3.4.1" % Test,
       "org.slf4j" % "slf4j-nop" % "1.7.26" % Test
     ),
-    crossPaths := false
+    crossPaths := false,
+    autoScalaLibrary := false
   )
 
 ThisBuild / scmInfo := Some(
