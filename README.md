@@ -152,12 +152,6 @@ class Items(tag: Tag) extends Table[(String)](tag, "items") {
 Insert a vector
 
 ```scala
-object Pgvector {
-  def toString(v: Array[Float]) = {
-    "[" + v.mkString(",") + "]"
-  }
-}
-
 val embedding = new PGvector(Array[Float](1, 1, 1)).toString
 db.run(sqlu"INSERT INTO items (embedding) VALUES ($embedding::vector)")
 ```
