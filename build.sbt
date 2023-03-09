@@ -2,6 +2,7 @@ ThisBuild / scalaVersion     := "2.13.10"
 ThisBuild / version          := "0.1.0-SNAPSHOT"
 ThisBuild / organization     := "com.pgvector"
 ThisBuild / organizationName := "pgvector"
+ThisBuild / organizationHomepage := Some(url("https://github.com/pgvector"))
 
 lazy val root = (project in file("."))
   .settings(
@@ -13,3 +14,32 @@ lazy val root = (project in file("."))
       "org.slf4j" % "slf4j-nop" % "1.7.26" % Test
     )
   )
+
+ThisBuild / scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/pgvector/pgvector-java"),
+    "scm:git:https://github.com/pgvector/pgvector-java.git"
+  )
+)
+ThisBuild / developers := List(
+  Developer(
+    id = "ankane",
+    name = "Andrew Kane",
+    email = "andrew@ankane.org",
+    url = url("https://github.com/ankane")
+  )
+)
+
+ThisBuild / description := "pgvector support for Java and Scala"
+ThisBuild / licenses := List(
+  "MIT" -> new URL("https://opensource.org/license/mit/")
+)
+ThisBuild / homepage := Some(url("https://github.com/pgvector/pgvector-java"))
+
+ThisBuild / pomIncludeRepository := { _ => false }
+ThisBuild / publishTo := {
+  val nexus = "https://s01.oss.sonatype.org/"
+  if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
+  else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+}
+ThisBuild / publishMavenStyle := true
