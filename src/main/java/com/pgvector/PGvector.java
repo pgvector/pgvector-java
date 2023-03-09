@@ -13,20 +13,32 @@ import org.postgresql.util.PGobject;
 public class PGvector extends PGobject implements Serializable, Cloneable {
     private float[] vec;
 
+    /**
+     * Constructor
+     */
     public PGvector() {
         type = "vector";
     }
 
+    /**
+     * Constructor
+     */
     public PGvector(float[] v) {
         this();
         vec = v;
     }
 
+    /**
+     * Constructor
+     */
     public PGvector(String s) throws SQLException {
         this();
         setValue(s);
     }
 
+    /**
+     * Sets the value from the text representation of a vector
+     */
     public void setValue(String s) throws SQLException {
         if (s == null) {
             vec = null;
@@ -39,6 +51,9 @@ public class PGvector extends PGobject implements Serializable, Cloneable {
         }
     }
 
+    /**
+     * Returns the text representation of a vector
+     */
     public String getValue() {
         if (vec == null) {
             return null;
@@ -47,10 +62,16 @@ public class PGvector extends PGobject implements Serializable, Cloneable {
         }
     }
 
+    /**
+     * Returns an array
+     */
     public float[] toArray() {
         return vec;
     }
 
+    /**
+     * Registers the vector type
+     */
     public static void addVectorType(Connection conn) throws SQLException {
         conn.unwrap(PGConnection.class).addDataType("vector", PGvector.class);
     }
