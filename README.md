@@ -8,7 +8,13 @@ Supports [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/basics/index.html) 
 
 ## Getting Started
 
-Follow the instructions for your database library:
+Add to `build.sbt`:
+
+```sbt
+libraryDependencies += "com.pgvector" % "pgvector" % "0.1.0"
+```
+
+And follow the instructions for your database library:
 
 - [JDBC (Java)](#jdbc-java)
 - [JDBC (Scala)](#jdbc-scala)
@@ -26,16 +32,16 @@ createStmt.executeUpdate("CREATE TABLE items (embedding vector(3))");
 Insert a vector
 
 ```java
-PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO items (embedding) VALUES (?::vector)");
-insertStmt.setString(1, "[1,1,1]");
+PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO items (embedding) VALUES (?)");
+insertStmt.setObject(1, new PGvector(new float[] {1, 1, 1}));
 insertStmt.executeUpdate();
 ```
 
 Get the nearest neighbors
 
 ```java
-PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM items ORDER BY embedding <-> ?::vector LIMIT 5");
-neighborStmt.setString(1, "[1,1,1]");
+PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM items ORDER BY embedding <-> ? LIMIT 5");
+neighborStmt.setObject(1, new PGvector(new float[] {1, 1, 1}));
 ResultSet rs = neighborStmt.executeQuery();
 while (rs.next()) {
     System.out.println(rs.getString("embedding"));
@@ -66,7 +72,7 @@ Insert a vector
 
 ```scala
 val insertStmt = conn.prepareStatement("INSERT INTO items (embedding) VALUES (?::vector)")
-insertStmt.setString(1, "[1,1,1]")
+insertStmt.setObject(1, new PGvector(Array[Float](1, 1, 1)))
 insertStmt.executeUpdate()
 ```
 
@@ -74,7 +80,7 @@ Get the nearest neighbors
 
 ```scala
 val neighborStmt = conn.prepareStatement("SELECT * FROM items ORDER BY embedding <-> ?::vector LIMIT 5")
-neighborStmt.setString(1, "[1,1,1]")
+neighborStmt.setObject(1, new PGvector(Array[Float](1, 1, 1)))
 val rs = neighborStmt.executeQuery()
 while (rs.next()) {
   println(rs.getString("embedding"))
@@ -112,14 +118,14 @@ object Pgvector {
   }
 }
 
-val embedding = Pgvector.toString(Array(1, 1, 1))
+val embedding = new PGvector(Array[Float](1, 1, 1)).toString
 db.run(sqlu"INSERT INTO items (embedding) VALUES ($embedding::vector)")
 ```
 
 Get the nearest neighbors
 
 ```scala
-val embedding = Pgvector.toString(Array(1, 1, 1))
+val embedding = new PGvector(Array[Float](1, 1, 1)).toString
 db.run(sql"SELECT * FROM items ORDER BY embedding <-> $embedding::vector LIMIT 5".as[(String)])
 ```
 
