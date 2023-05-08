@@ -1,5 +1,5 @@
 ThisBuild / scalaVersion     := "2.13.10"
-ThisBuild / version          := "0.1.1"
+ThisBuild / version          := "0.1.2"
 ThisBuild / versionScheme    := Some("early-semver")
 ThisBuild / organization     := "com.pgvector"
 ThisBuild / organizationName := "pgvector"

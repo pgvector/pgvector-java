@@ -1,4 +1,4 @@
-## 0.1.2 (unreleased)
+## 0.1.2 (2023-05-08)
 
 - Added support for Java 11 and 17
 
