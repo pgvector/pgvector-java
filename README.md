@@ -2,7 +2,7 @@
 
 [pgvector](https://github.com/pgvector/pgvector) support for Java and Scala
 
-Supports [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/basics/index.html) and [Slick](https://github.com/slick/slick)
+Supports [JDBC](https://jdbc.postgresql.org/) and [Slick](https://github.com/slick/slick)
 
 [![Build Status](https://github.com/pgvector/pgvector-java/workflows/build/badge.svg?branch=master)](https://github.com/pgvector/pgvector-java/actions)
 
