@@ -14,7 +14,7 @@ object JDBCScala {
     PGvector.addVectorType(conn)
 
     val createStmt = conn.createStatement()
-    createStmt.executeUpdate("CREATE TABLE jdbc_items (embedding vector(3))")
+    createStmt.executeUpdate("CREATE TABLE jdbc_items (id bigserial PRIMARY KEY, embedding vector(3))")
 
     val insertStmt = conn.prepareStatement("INSERT INTO jdbc_items (embedding) VALUES (?), (?), (?), (?)")
     insertStmt.setObject(1, new PGvector(Array[Float](1, 1, 1)))
@@ -27,6 +27,7 @@ object JDBCScala {
     neighborStmt.setObject(1, new PGvector(Array[Float](1, 1, 1)))
     val rs = neighborStmt.executeQuery()
     while (rs.next()) {
+      println(rs.getLong("id"))
       println(rs.getObject("embedding").asInstanceOf[PGvector])
     }
 

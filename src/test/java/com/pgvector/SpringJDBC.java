@@ -16,7 +16,7 @@ public class SpringJDBC {
         jdbcTemplate.execute("CREATE EXTENSION IF NOT EXISTS vector");
         jdbcTemplate.execute("DROP TABLE IF EXISTS spring_items");
 
-        jdbcTemplate.execute("CREATE TABLE spring_items (embedding vector(3))");
+        jdbcTemplate.execute("CREATE TABLE spring_items (id bigserial PRIMARY KEY, embedding vector(3))");
 
         Object[] insertParams = new Object[] {
             new PGvector(new float[] {1, 1, 1}),
@@ -29,6 +29,7 @@ public class SpringJDBC {
         Object[] neighborParams = new Object[] { new PGvector(new float[] {1, 1, 1}) };
         List<Map<String, Object>> rows = jdbcTemplate.queryForList("SELECT * FROM spring_items ORDER BY embedding <-> ? LIMIT 5", neighborParams);
         for (Map row : rows) {
+            System.out.println(row.get("id"));
             System.out.println(row.get("embedding"));
         }
 

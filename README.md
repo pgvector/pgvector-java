@@ -49,7 +49,7 @@ Create a table
 
 ```java
 Statement createStmt = conn.createStatement();
-createStmt.executeUpdate("CREATE TABLE items (embedding vector(3))");
+createStmt.executeUpdate("CREATE TABLE items (id bigserial PRIMARY KEY, embedding vector(3))");
 ```
 
 Insert a vector
@@ -67,7 +67,7 @@ PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM items ORDE
 neighborStmt.setObject(1, new PGvector(new float[] {1, 1, 1}));
 ResultSet rs = neighborStmt.executeQuery();
 while (rs.next()) {
-    System.out.println((PGvector) rs.getObject(1));
+    System.out.println((PGvector) rs.getObject(2));
 }
 ```
 
@@ -93,7 +93,7 @@ import com.pgvector.PGvector;
 Create a table
 
 ```java
-jdbcTemplate.execute("CREATE TABLE items (embedding vector(3))");
+jdbcTemplate.execute("CREATE TABLE items (id bigserial PRIMARY KEY, embedding vector(3))");
 ```
 
 Insert a vector
@@ -141,7 +141,7 @@ Create a table
 
 ```scala
 val createStmt = conn.createStatement()
-createStmt.executeUpdate("CREATE TABLE items (embedding vector(3))")
+createStmt.executeUpdate("CREATE TABLE items (id bigserial PRIMARY KEY, embedding vector(3))")
 ```
 
 Insert a vector

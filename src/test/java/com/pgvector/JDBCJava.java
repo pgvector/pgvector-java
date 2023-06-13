@@ -14,7 +14,7 @@ public class JDBCJava {
         PGvector.addVectorType(conn);
 
         Statement createStmt = conn.createStatement();
-        createStmt.executeUpdate("CREATE TABLE jdbc_items (embedding vector(3))");
+        createStmt.executeUpdate("CREATE TABLE jdbc_items (id bigserial PRIMARY KEY, embedding vector(3))");
 
         PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO jdbc_items (embedding) VALUES (?), (?), (?), (?)");
         insertStmt.setObject(1, new PGvector(new float[] {1, 1, 1}));
@@ -27,7 +27,8 @@ public class JDBCJava {
         neighborStmt.setObject(1, new PGvector(new float[] {1, 1, 1}));
         ResultSet rs = neighborStmt.executeQuery();
         while (rs.next()) {
-            System.out.println((PGvector) rs.getObject(1));
+            System.out.println(rs.getLong(1));
+            System.out.println((PGvector) rs.getObject(2));
         }
 
         Statement indexStmt = conn.createStatement();
