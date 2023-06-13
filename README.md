@@ -75,7 +75,7 @@ Add an approximate index
 
 ```java
 Statement indexStmt = conn.createStatement();
-indexStmt.executeUpdate("CREATE INDEX my_index ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
+indexStmt.executeUpdate("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
@@ -116,7 +116,7 @@ for (Map row : rows) {
 Add an approximate index
 
 ```java
-jdbcTemplate.execute("CREATE INDEX my_index ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
+jdbcTemplate.execute("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
@@ -167,7 +167,7 @@ Add an approximate index
 
 ```scala
 val indexStmt = conn.createStatement()
-indexStmt.executeUpdate("CREATE INDEX my_index ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
+indexStmt.executeUpdate("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
@@ -208,7 +208,7 @@ db.run(sql"SELECT * FROM items ORDER BY embedding <-> $embedding::vector LIMIT 5
 Add an approximate index
 
 ```scala
-db.run(sqlu"CREATE INDEX my_index ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
+db.run(sqlu"CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
