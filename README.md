@@ -2,7 +2,7 @@
 
 [pgvector](https://github.com/pgvector/pgvector) support for Java and Scala
 
-Supports [JDBC](https://jdbc.postgresql.org/) and [Slick](https://github.com/slick/slick)
+Supports [JDBC](https://jdbc.postgresql.org/), [Spring JDBC](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html), and [Slick](https://github.com/slick/slick)
 
 [![Build Status](https://github.com/pgvector/pgvector-java/workflows/build/badge.svg?branch=master)](https://github.com/pgvector/pgvector-java/actions)
 
@@ -27,6 +27,7 @@ libraryDependencies += "com.pgvector" % "pgvector" % "0.1.2"
 And follow the instructions for your database library:
 
 - [JDBC (Java)](#jdbc-java)
+- [Spring JDBC](#spring-jdbc)
 - [JDBC (Scala)](#jdbc-scala)
 - [Slick](#slick)
 
@@ -80,6 +81,47 @@ indexStmt.executeUpdate("CREATE INDEX my_index ON items USING ivfflat (embedding
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
 
 See a [full example](src/test/java/com/pgvector/JDBCJava.java)
+
+## Spring JDBC
+
+Import the `PGvector` class
+
+```java
+import com.pgvector.PGvector;
+```
+
+Create a table
+
+```java
+jdbcTemplate.execute("CREATE TABLE items (embedding vector(3))");
+```
+
+Insert a vector
+
+```java
+Object[] insertParams = new Object[] { new PGvector(new float[] {1, 1, 1}) };
+jdbcTemplate.update("INSERT INTO items (embedding) VALUES (?)", insertParams);
+```
+
+Get the nearest neighbors
+
+```java
+Object[] neighborParams = new Object[] { new PGvector(new float[] {1, 1, 1}) };
+List<Map<String, Object>> rows = jdbcTemplate.queryForList("SELECT * FROM items ORDER BY embedding <-> ? LIMIT 5", neighborParams);
+for (Map row : rows) {
+    System.out.println(row.get("embedding"));
+}
+```
+
+Add an approximate index
+
+```java
+jdbcTemplate.execute("CREATE INDEX my_index ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
+```
+
+Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
+
+See a [full example](src/test/java/com/pgvector/SpringJDBC.java)
 
 ## JDBC (Scala)
 
