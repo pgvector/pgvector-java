@@ -5,6 +5,10 @@ class HelloSpec extends munit.FunSuite {
     JDBCJava.example()
   }
 
+  test("SpringJDBC") {
+    SpringJDBC.example()
+  }
+
   test("JDBCScala") {
     JDBCScala.example()
   }
