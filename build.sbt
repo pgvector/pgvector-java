@@ -37,7 +37,7 @@ ThisBuild / developers := List(
 
 ThisBuild / description := "pgvector support for Java and Scala"
 ThisBuild / licenses := List(
-  "MIT" -> new URL("https://opensource.org/license/mit/")
+  "MIT" -> url("https://opensource.org/license/mit/")
 )
 ThisBuild / homepage := Some(url("https://github.com/pgvector/pgvector-java"))
 
