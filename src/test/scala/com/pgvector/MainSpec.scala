@@ -2,7 +2,11 @@ package com.pgvector
 
 class HelloSpec extends munit.FunSuite {
   test("JDBCJava") {
-    JDBCJava.example()
+    JDBCJava.example(false)
+  }
+
+  test("JDBCJava read binary") {
+    JDBCJava.example(true)
   }
 
   test("SpringJDBC") {

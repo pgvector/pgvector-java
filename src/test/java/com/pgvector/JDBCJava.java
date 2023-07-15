@@ -2,10 +2,14 @@ package com.pgvector;
 
 import java.sql.*;
 import com.pgvector.PGvector;
+import org.postgresql.PGConnection;
 
 public class JDBCJava {
-    public static void example() throws SQLException {
+    public static void example(boolean read_binary) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_java_test");
+        if (read_binary) {
+            conn.unwrap(PGConnection.class).setPrepareThreshold(-1);
+        }
 
         Statement setupStmt = conn.createStatement();
         setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector");

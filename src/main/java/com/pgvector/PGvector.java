@@ -5,12 +5,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
 import org.postgresql.PGConnection;
+import org.postgresql.util.ByteConverter;
+import org.postgresql.util.PGBinaryObject;
 import org.postgresql.util.PGobject;
 
 /**
  * PGvector class
  */
-public class PGvector extends PGobject implements Serializable, Cloneable {
+public class PGvector extends PGobject implements PGBinaryObject, Serializable, Cloneable {
     private float[] vec;
 
     /**
@@ -59,6 +61,45 @@ public class PGvector extends PGobject implements Serializable, Cloneable {
             return null;
         } else {
             return Arrays.toString(vec).replace(" ", "");
+        }
+    }
+
+    /**
+     * Returns the number of bytes for the binary representation
+     */
+    public int lengthInBytes() {
+        return vec == null ? 0 : 4 + vec.length * 4;
+    }
+
+    /**
+     * Sets the value from a binary representation of a vector
+     */
+    public void setByteValue(byte[] value, int offset) throws SQLException {
+        int dim = ByteConverter.int2(value, offset);
+
+        int unused = ByteConverter.int2(value, offset + 2);
+        if (unused != 0) {
+            throw new SQLException("expected unused to be 0");
+        }
+
+        vec = new float[dim];
+        for (int i = 0; i < dim; i++) {
+            vec[i] = ByteConverter.float4(value, offset + 4 + i * 4);
+        }
+    }
+
+    /**
+     * Writes the binary representation of a vector
+     */
+    public void toBytes(byte[] bytes, int offset) {
+        if (vec == null) {
+            return;
+        }
+
+        ByteConverter.int2(bytes, offset, vec.length);
+        ByteConverter.int2(bytes, offset + 2, 0);
+        for (int i = 0; i < vec.length; i++) {
+            ByteConverter.float4(bytes, offset + 4 + i * 4, vec[i]);
         }
     }
 
