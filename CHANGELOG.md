@@ -1,6 +1,7 @@
 ## 0.1.3 (unreleased)
 
 - Added support for binary representation
+- Added support for Java 8
 
 ## 0.1.2 (2023-05-08)
 
