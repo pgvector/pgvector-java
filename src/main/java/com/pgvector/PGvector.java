@@ -96,6 +96,8 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
             return;
         }
 
+        // server will error on overflow due to unconsumed buffer
+        // could set to Short.MAX_VALUE for friendlier error message
         ByteConverter.int2(bytes, offset, vec.length);
         ByteConverter.int2(bytes, offset + 2, 0);
         for (int i = 0; i < vec.length; i++) {
