@@ -1,6 +1,10 @@
 package com.pgvector
 
 class HelloSpec extends munit.FunSuite {
+  test("Hibernate") {
+    Hibernate.example()
+  }
+
   test("JDBCJava") {
     JDBCJava.example(false)
   }

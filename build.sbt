@@ -14,7 +14,8 @@ lazy val root = (project in file("."))
       "org.scalameta" %% "munit" % "0.7.29" % Test,
       "com.typesafe.slick" %% "slick" % "3.4.1" % Test,
       "org.slf4j" % "slf4j-nop" % "1.7.26" % Test,
-      "org.springframework" % "spring-jdbc" % "5.3.27" % Test
+      "org.springframework" % "spring-jdbc" % "5.3.27" % Test,
+      "org.hibernate.orm" % "hibernate-core" % "6.2.7.Final" % Test
     ),
     crossPaths := false,
     autoScalaLibrary := false
