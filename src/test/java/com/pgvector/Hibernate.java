@@ -19,19 +19,18 @@ public class Hibernate {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.createNativeQuery("CREATE EXTENSION IF NOT EXISTS vector", Object.class).executeUpdate();
-        session.createNativeQuery("DROP TABLE IF EXISTS hibernate_items", Object.class).executeUpdate();
-        session.createNativeQuery("CREATE TABLE hibernate_items (id bigserial PRIMARY KEY, embedding vector(3))", Object.class).executeUpdate();
+        session.createNativeQuery("CREATE EXTENSION IF NOT EXISTS vector").executeUpdate();
+        session.createNativeQuery("DROP TABLE IF EXISTS hibernate_items").executeUpdate();
+        session.createNativeQuery("CREATE TABLE hibernate_items (id bigserial PRIMARY KEY, embedding vector(3))").executeUpdate();
 
-        session.createNativeQuery("INSERT INTO hibernate_items (embedding) VALUES (CAST(? AS vector)), (CAST(? AS vector)), (CAST(? AS vector)), (?)", Object.class)
+        session.createNativeQuery("INSERT INTO hibernate_items (embedding) VALUES (CAST(? AS vector)), (CAST(? AS vector)), (CAST(? AS vector)), (NULL)")
             .setParameter(1, (new PGvector(new float[] {1, 1, 1})).getValue())
             .setParameter(2, (new PGvector(new float[] {2, 2, 2})).getValue())
             .setParameter(3, (new PGvector(new float[] {1, 1, 2})).getValue())
-            .setParameter(4, null)
             .executeUpdate();
 
         List<Object[]> items = session
-            .createNativeQuery("SELECT * FROM hibernate_items ORDER BY embedding <-> CAST(? AS vector) LIMIT 5", Object[].class)
+            .createNativeQuery("SELECT id, CAST(embedding AS text) FROM hibernate_items ORDER BY embedding <-> CAST(? AS vector) LIMIT 5")
             .setParameter(1, (new PGvector(new float[] {1, 1, 1})).getValue())
             .list();
         for (Object[] item : items) {
