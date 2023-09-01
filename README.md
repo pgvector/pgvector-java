@@ -76,6 +76,8 @@ Add an approximate index
 ```java
 Statement indexStmt = conn.createStatement();
 indexStmt.executeUpdate("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
+// or
+indexStmt.executeUpdate("CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)");
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
@@ -117,6 +119,8 @@ Add an approximate index
 
 ```java
 jdbcTemplate.execute("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
+// or
+jdbcTemplate.execute("CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)");
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
@@ -168,6 +172,8 @@ Add an approximate index
 ```scala
 val indexStmt = conn.createStatement()
 indexStmt.executeUpdate("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
+// or
+indexStmt.executeUpdate("CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)")
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
@@ -209,6 +215,8 @@ Add an approximate index
 
 ```scala
 db.run(sqlu"CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
+// or
+db.run(sqlu"CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)")
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
