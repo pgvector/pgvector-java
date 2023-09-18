@@ -39,6 +39,13 @@ Import the `PGvector` class
 import com.pgvector.PGvector;
 ```
 
+Enable the extension
+
+```java
+Statement setupStmt = conn.createStatement();
+setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector");
+```
+
 Register the vector type with your connection
 
 ```java
@@ -92,6 +99,12 @@ Import the `PGvector` class
 import com.pgvector.PGvector;
 ```
 
+Enable the extension
+
+```java
+jdbcTemplate.execute("CREATE EXTENSION IF NOT EXISTS vector");
+```
+
 Create a table
 
 ```java
@@ -133,6 +146,13 @@ Import the `PGvector` class
 
 ```scala
 import com.pgvector.PGvector
+```
+
+Enable the extension
+
+```java
+val setupStmt = conn.createStatement()
+setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector")
 ```
 
 Register the vector type with your connection
@@ -186,6 +206,12 @@ Import the `PGvector` class
 
 ```scala
 import com.pgvector.PGvector
+```
+
+Enable the extension
+
+```java
+db.run(sqlu"CREATE EXTENSION IF NOT EXISTS vector")
 ```
 
 Add a vector column
