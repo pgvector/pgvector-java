@@ -47,7 +47,7 @@ public class JDBCJavaTest {
         }
 
         Statement indexStmt = conn.createStatement();
-        indexStmt.executeUpdate("CREATE INDEX jdbc_index ON jdbc_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
+        indexStmt.executeUpdate("CREATE INDEX ON jdbc_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
 
         conn.close();
     }

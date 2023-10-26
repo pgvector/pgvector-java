@@ -39,7 +39,7 @@ class SlickTest {
         db.run(sql"SELECT * FROM slick_items ORDER BY embedding <-> $embedding::vector LIMIT 5".as[(String)].map(println))
       }.flatMap { _ =>
         // index
-        db.run(sqlu"CREATE INDEX slick_index ON slick_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
+        db.run(sqlu"CREATE INDEX ON slick_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
       }
 
       Await.result(resultFuture, Duration.Inf)

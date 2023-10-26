@@ -34,7 +34,7 @@ class JDBCScalaTest {
     }
 
     val indexStmt = conn.createStatement()
-    indexStmt.executeUpdate("CREATE INDEX jdbc_scala_index ON jdbc_scala_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
+    indexStmt.executeUpdate("CREATE INDEX ON jdbc_scala_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
 
     conn.close()
   }

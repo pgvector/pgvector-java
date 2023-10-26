@@ -35,6 +35,6 @@ public class SpringJDBCTest {
             System.out.println(row.get("embedding"));
         }
 
-        jdbcTemplate.execute("CREATE INDEX spring_index ON spring_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
+        jdbcTemplate.execute("CREATE INDEX ON spring_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
     }
 }
