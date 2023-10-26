@@ -89,7 +89,7 @@ indexStmt.executeUpdate("CREATE INDEX ON items USING hnsw (embedding vector_l2_o
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
 
-See a [full example](src/test/java/com/pgvector/JDBCJava.java)
+See a [full example](src/test/java/com/pgvector/JDBCJavaTest.java)
 
 ## Spring JDBC
 
@@ -138,7 +138,7 @@ jdbcTemplate.execute("CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
 
-See a [full example](src/test/java/com/pgvector/SpringJDBC.java)
+See a [full example](src/test/java/com/pgvector/SpringJDBCTest.java)
 
 ## JDBC (Scala)
 
@@ -198,7 +198,7 @@ indexStmt.executeUpdate("CREATE INDEX ON items USING hnsw (embedding vector_l2_o
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
 
-See a [full example](src/test/scala/com/pgvector/JDBCScala.scala)
+See a [full example](src/test/scala/com/pgvector/JDBCScalaTest.scala)
 
 ## Slick
 
@@ -247,7 +247,7 @@ db.run(sqlu"CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)")
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
 
-See a [full example](src/test/scala/com/pgvector/Slick.scala)
+See a [full example](src/test/scala/com/pgvector/SlickTest.scala)
 
 ## History
 
