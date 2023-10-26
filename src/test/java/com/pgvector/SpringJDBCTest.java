@@ -6,7 +6,7 @@ import java.util.Map;
 import com.pgvector.PGvector;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SpringJDBCTest {
     @Test

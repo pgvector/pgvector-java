@@ -5,7 +5,7 @@ import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 import slick.jdbc.PostgresProfile.api._
 import com.pgvector.PGvector
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class Items(tag: Tag) extends Table[(String)](tag, "slick_items") {
   def embedding = column[String]("embedding", O.SqlType("vector(3)"))

@@ -3,7 +3,7 @@ package com.pgvector;
 import java.sql.*;
 import com.pgvector.PGvector;
 import org.postgresql.PGConnection;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class JDBCJavaTest {
     @Test

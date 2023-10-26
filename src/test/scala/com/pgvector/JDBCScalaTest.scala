@@ -2,7 +2,7 @@ package com.pgvector
 
 import java.sql.DriverManager
 import com.pgvector.PGvector
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class JDBCScalaTest {
   @Test
