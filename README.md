@@ -1,6 +1,6 @@
 # pgvector-java
 
-[pgvector](https://github.com/pgvector/pgvector) support for Java and Scala
+[pgvector](https://github.com/pgvector/pgvector) support for Java, Kotlin, and Scala
 
 Supports [JDBC](https://jdbc.postgresql.org/), [Spring JDBC](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html), and [Slick](https://github.com/slick/slick)
 
@@ -28,6 +28,7 @@ And follow the instructions for your database library:
 
 - [JDBC (Java)](#jdbc-java)
 - [Spring JDBC](#spring-jdbc)
+- [JDBC (Kotlin)](#jdbc-kotlin)
 - [JDBC (Scala)](#jdbc-scala)
 - [Slick](#slick)
 
@@ -139,6 +140,66 @@ jdbcTemplate.execute("CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
 
 See a [full example](src/test/java/com/pgvector/SpringJDBCTest.java)
+
+## JDBC (Kotlin)
+
+Import the `PGvector` class
+
+```kotlin
+import com.pgvector.PGvector
+```
+
+Enable the extension
+
+```kotlin
+val setupStmt = conn.createStatement()
+setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector")
+```
+
+Register the vector type with your connection
+
+```kotlin
+PGvector.addVectorType(conn)
+```
+
+Create a table
+
+```kotlin
+val createStmt = conn.createStatement()
+createStmt.executeUpdate("CREATE TABLE items (id bigserial PRIMARY KEY, embedding vector(3))")
+```
+
+Insert a vector
+
+```kotlin
+val insertStmt = conn.prepareStatement("INSERT INTO items (embedding) VALUES (?)")
+insertStmt.setObject(1, PGvector(floatArrayOf(1.0f, 1.0f, 1.0f)))
+insertStmt.executeUpdate()
+```
+
+Get the nearest neighbors
+
+```kotlin
+val neighborStmt = conn.prepareStatement("SELECT * FROM items ORDER BY embedding <-> ? LIMIT 5")
+neighborStmt.setObject(1, PGvector(floatArrayOf(1.0f, 1.0f, 1.0f)))
+val rs = neighborStmt.executeQuery()
+while (rs.next()) {
+  println(rs.getObject("embedding") as PGvector?)
+}
+```
+
+Add an approximate index
+
+```kotlin
+val indexStmt = conn.createStatement()
+indexStmt.executeUpdate("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
+// or
+indexStmt.executeUpdate("CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)")
+```
+
+Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
+
+See a [full example](src/test/kotlin/com/pgvector/JDBCKotlinTest.kt)
 
 ## JDBC (Scala)
 
@@ -268,5 +329,5 @@ To get started with development:
 git clone https://github.com/pgvector/pgvector-java.git
 cd pgvector-java
 createdb pgvector_java_test
-sbt test
+mvn test
 ```
