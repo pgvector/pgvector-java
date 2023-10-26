@@ -42,8 +42,8 @@ public class JDBCJavaTest {
         neighborStmt.setObject(1, new PGvector(new float[] {1, 1, 1}));
         ResultSet rs = neighborStmt.executeQuery();
         while (rs.next()) {
-            System.out.println(rs.getLong(1));
-            System.out.println((PGvector) rs.getObject(2));
+            System.out.println(rs.getLong("id"));
+            System.out.println((PGvector) rs.getObject("embedding"));
         }
 
         Statement indexStmt = conn.createStatement();

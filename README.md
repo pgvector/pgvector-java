@@ -74,7 +74,7 @@ PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM items ORDE
 neighborStmt.setObject(1, new PGvector(new float[] {1, 1, 1}));
 ResultSet rs = neighborStmt.executeQuery();
 while (rs.next()) {
-    System.out.println((PGvector) rs.getObject(2));
+    System.out.println((PGvector) rs.getObject("embedding"));
 }
 ```
 
