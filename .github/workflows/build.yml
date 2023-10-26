@@ -23,4 +23,5 @@ jobs:
           cd pgvector
           make
           sudo make install
+      - run: psql -d pgvector_java_test -c "CREATE EXTENSION vector"
       - run: sbt test
