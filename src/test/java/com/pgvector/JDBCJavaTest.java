@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class JDBCJavaTest {
     @Test
-    public void works() throws SQLException {
+    public void readText() throws SQLException {
         example(false);
     }
 
