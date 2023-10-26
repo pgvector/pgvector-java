@@ -24,6 +24,8 @@ For sbt, add to `build.sbt`:
 libraryDependencies += "com.pgvector" % "pgvector" % "0.1.3"
 ```
 
+For other build tools, see [this page](https://central.sonatype.com/artifact/com.pgvector/pgvector).
+
 And follow the instructions for your database library:
 
 - [JDBC (Java)](#jdbc-java)
