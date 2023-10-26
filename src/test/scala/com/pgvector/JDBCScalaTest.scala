@@ -4,7 +4,7 @@ import java.sql.DriverManager
 import com.pgvector.PGvector
 import org.junit.Test
 
-class JDBCScala {
+class JDBCScalaTest {
   @Test
   def example(): Unit = {
     val conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_java_test")

@@ -5,7 +5,7 @@ import com.pgvector.PGvector;
 import org.postgresql.PGConnection;
 import org.junit.Test;
 
-public class JDBCJava {
+public class JDBCJavaTest {
     @Test
     public void works() throws SQLException {
         example(false);

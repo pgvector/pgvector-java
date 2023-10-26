@@ -10,7 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 
-public class Hibernate {
+public class HibernateTest {
     @Test
     public void example() throws SQLException {
         // disable logging

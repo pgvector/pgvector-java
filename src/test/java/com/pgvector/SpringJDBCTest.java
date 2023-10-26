@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.junit.Test;
 
-public class SpringJDBC {
+public class SpringJDBCTest {
     @Test
     public void example() throws SQLException {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();

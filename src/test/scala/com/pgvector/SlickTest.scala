@@ -12,7 +12,7 @@ class Items(tag: Tag) extends Table[(String)](tag, "slick_items") {
   def * = (embedding)
 }
 
-class Slick {
+class SlickTest {
   @Test
   def example(): Unit = {
     val db = Database.forURL("jdbc:postgresql://localhost:5432/pgvector_java_test", driver="org.postgresql.Driver")
