@@ -3,9 +3,20 @@ package com.pgvector;
 import java.sql.*;
 import com.pgvector.PGvector;
 import org.postgresql.PGConnection;
+import org.junit.Test;
 
 public class JDBCJava {
-    public static void example(boolean read_binary) throws SQLException {
+    @Test
+    public void works() throws SQLException {
+        example(false);
+    }
+
+    @Test
+    public void readBinary() throws SQLException {
+        example(true);
+    }
+
+    private void example(boolean read_binary) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_java_test");
         if (read_binary) {
             conn.unwrap(PGConnection.class).setPrepareThreshold(-1);

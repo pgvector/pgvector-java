@@ -6,9 +6,11 @@ import java.util.Map;
 import com.pgvector.PGvector;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.junit.Test;
 
 public class SpringJDBC {
-    public static void example() throws SQLException {
+    @Test
+    public void example() throws SQLException {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setUrl("jdbc:postgresql://localhost:5432/pgvector_java_test");
 

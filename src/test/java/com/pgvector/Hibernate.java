@@ -8,9 +8,11 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.junit.Test;
 
 public class Hibernate {
-    public static void example() throws SQLException {
+    @Test
+    public void example() throws SQLException {
         // disable logging
         System.setProperty("org.jboss.logging.provider", "slf4j");
 

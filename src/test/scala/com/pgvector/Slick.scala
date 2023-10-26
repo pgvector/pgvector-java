@@ -5,13 +5,15 @@ import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 import slick.jdbc.PostgresProfile.api._
 import com.pgvector.PGvector
+import org.junit.Test
 
 class Items(tag: Tag) extends Table[(String)](tag, "slick_items") {
   def embedding = column[String]("embedding", O.SqlType("vector(3)"))
   def * = (embedding)
 }
 
-object Slick {
+class Slick {
+  @Test
   def example(): Unit = {
     val db = Database.forURL("jdbc:postgresql://localhost:5432/pgvector_java_test", driver="org.postgresql.Driver")
 
