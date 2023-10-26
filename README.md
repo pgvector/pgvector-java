@@ -8,7 +8,7 @@ Supports [JDBC](https://jdbc.postgresql.org/), [Spring JDBC](https://docs.spring
 
 ## Getting Started
 
-For Java, add to `pom.xml` under `<dependencies>`:
+For Maven, add to `pom.xml` under `<dependencies>`:
 
 ```xml
 <dependency>
@@ -18,7 +18,7 @@ For Java, add to `pom.xml` under `<dependencies>`:
 </dependency>
 ```
 
-For Scala, add to `build.sbt`:
+For sbt, add to `build.sbt`:
 
 ```sbt
 libraryDependencies += "com.pgvector" % "pgvector" % "0.1.3"
