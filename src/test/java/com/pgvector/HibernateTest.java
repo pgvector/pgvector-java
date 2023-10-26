@@ -31,6 +31,7 @@ public class HibernateTest {
             .setParameter(3, (new PGvector(new float[] {1, 1, 2})).getValue())
             .executeUpdate();
 
+        @SuppressWarnings("unchecked")
         List<Object[]> items = session
             .createNativeQuery("SELECT id, CAST(embedding AS text) FROM hibernate_items ORDER BY embedding <-> CAST(? AS vector) LIMIT 5")
             .setParameter(1, (new PGvector(new float[] {1, 1, 1})).getValue())
