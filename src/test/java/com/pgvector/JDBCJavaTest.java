@@ -56,6 +56,7 @@ public class JDBCJavaTest {
         assertArrayEquals(new float[] {1, 1, 1}, embeddings.get(0).toArray());
         assertArrayEquals(new float[] {1, 1, 2}, embeddings.get(1).toArray());
         assertArrayEquals(new float[] {2, 2, 2}, embeddings.get(2).toArray());
+        assertNull(embeddings.get(3));
 
         Statement indexStmt = conn.createStatement();
         indexStmt.executeUpdate("CREATE INDEX ON jdbc_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
