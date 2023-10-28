@@ -1,9 +1,14 @@
 package com.pgvector;
 
 import java.sql.*;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import com.pgvector.PGvector;
 import org.postgresql.PGConnection;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JDBCJavaTest {
     @Test
@@ -41,10 +46,14 @@ public class JDBCJavaTest {
         PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_items ORDER BY embedding <-> ? LIMIT 5");
         neighborStmt.setObject(1, new PGvector(new float[] {1, 1, 1}));
         ResultSet rs = neighborStmt.executeQuery();
+        List<Long> ids = new ArrayList<>();
+        List<PGvector> embeddings = new ArrayList<>();
         while (rs.next()) {
-            System.out.println(rs.getLong("id"));
-            System.out.println((PGvector) rs.getObject("embedding"));
+            ids.add(rs.getLong("id"));
+            embeddings.add((PGvector) rs.getObject("embedding"));
         }
+        assertEquals(Arrays.asList(new Long[]{1L, 3L, 2L, 4L}), ids);
+        assertArrayEquals(new float[] {1, 1, 1}, embeddings.get(0).toArray());
 
         Statement indexStmt = conn.createStatement();
         indexStmt.executeUpdate("CREATE INDEX ON jdbc_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
