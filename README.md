@@ -1,6 +1,6 @@
 # pgvector-java
 
-[pgvector](https://github.com/pgvector/pgvector) support for Java, Kotlin, and Scala
+[pgvector](https://github.com/pgvector/pgvector) support for Java, Kotlin, Groovy, and Scala
 
 Supports [JDBC](https://jdbc.postgresql.org/), [Spring JDBC](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html), and [Slick](https://github.com/slick/slick)
 
