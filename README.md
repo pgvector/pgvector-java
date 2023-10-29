@@ -260,7 +260,7 @@ indexStmt.executeUpdate("CREATE INDEX ON items USING hnsw (embedding vector_l2_o
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
 
-See a [full example](src/test/groovy/com/pgvector/JDBCGroovyTest.java)
+See a [full example](src/test/groovy/com/pgvector/JDBCGroovyTest.groovy)
 
 ## Groovy SQL
 
