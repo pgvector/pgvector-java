@@ -39,12 +39,13 @@ class SlickTest {
       }.flatMap { _ =>
         // select
         val embedding = new PGvector(Array[Float](1, 1, 1)).toString
-        db.run(sql"SELECT embedding FROM slick_items ORDER BY embedding <-> $embedding::vector LIMIT 5".as[(String)])
-      }.flatMap { embeddings =>
+        db.run(sql"SELECT * FROM slick_items ORDER BY embedding <-> $embedding::vector LIMIT 5".as[(Int, String)])
+      }.flatMap { rows =>
         // check
-        assertEquals("[1,1,1]", embeddings(0))
-        assertEquals("[1,1,2]", embeddings(1))
-        assertEquals("[2,2,2]", embeddings(2))
+        assertArrayEquals(Array[Int](1, 3, 2), rows.map(r => r._1).toArray)
+        assertEquals("[1,1,1]", rows(0)._2)
+        assertEquals("[1,1,2]", rows(1)._2)
+        assertEquals("[2,2,2]", rows(2)._2)
 
         // index
         db.run(sqlu"CREATE INDEX ON slick_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
