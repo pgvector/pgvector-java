@@ -25,7 +25,7 @@ public class JDBCKotlinTest {
         insertStmt.setObject(1, PGvector(floatArrayOf(1.0f, 1.0f, 1.0f)))
         insertStmt.setObject(2, PGvector(floatArrayOf(2.0f, 2.0f, 2.0f)))
         insertStmt.setObject(3, PGvector(floatArrayOf(1.0f, 1.0f, 2.0f)))
-        insertStmt.setObject(4, PGvector())
+        insertStmt.setObject(4, null)
         insertStmt.executeUpdate()
 
         val neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_kotlin_items ORDER BY embedding <-> ? LIMIT 5")

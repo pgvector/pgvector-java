@@ -29,7 +29,7 @@ public class SpringJDBCTest {
             new PGvector(new float[] {1, 1, 1}),
             new PGvector(new float[] {2, 2, 2}),
             new PGvector(new float[] {1, 1, 2}),
-            new PGvector()
+            null
         };
         jdbcTemplate.update("INSERT INTO spring_items (embedding) VALUES (?), (?), (?), (?)", insertParams);
 

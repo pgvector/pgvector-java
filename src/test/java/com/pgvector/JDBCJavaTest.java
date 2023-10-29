@@ -40,7 +40,7 @@ public class JDBCJavaTest {
         insertStmt.setObject(1, new PGvector(new float[] {1, 1, 1}));
         insertStmt.setObject(2, new PGvector(new float[] {2, 2, 2}));
         insertStmt.setObject(3, new PGvector(new float[] {1, 1, 2}));
-        insertStmt.setObject(4, new PGvector());
+        insertStmt.setObject(4, null);
         insertStmt.executeUpdate();
 
         PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_items ORDER BY embedding <-> ? LIMIT 5");
