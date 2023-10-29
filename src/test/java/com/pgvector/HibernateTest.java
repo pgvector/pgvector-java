@@ -47,7 +47,7 @@ public class HibernateTest {
             ids.add(Long.valueOf(((BigInteger) item[0]).longValue()));
             embeddings.add(item[1] == null ? null : new PGvector((String) item[1]));
         }
-        assertArrayEquals(new Long[]{1L, 3L, 2L, 4L}, ids.toArray());
+        assertArrayEquals(new Long[] {1L, 3L, 2L, 4L}, ids.toArray());
         assertArrayEquals(new float[] {1, 1, 1}, embeddings.get(0).toArray());
         assertArrayEquals(new float[] {1, 1, 2}, embeddings.get(1).toArray());
         assertArrayEquals(new float[] {2, 2, 2}, embeddings.get(2).toArray());

@@ -41,7 +41,7 @@ public class SpringJDBCTest {
             ids.add((Long) row.get("id"));
             embeddings.add(row.get("embedding") == null ? null : new PGvector(((PGobject) row.get("embedding")).getValue()));
         }
-        assertArrayEquals(new Long[]{1L, 3L, 2L, 4L}, ids.toArray());
+        assertArrayEquals(new Long[] {1L, 3L, 2L, 4L}, ids.toArray());
         assertArrayEquals(new float[] {1, 1, 1}, embeddings.get(0).toArray());
         assertArrayEquals(new float[] {1, 1, 2}, embeddings.get(1).toArray());
         assertArrayEquals(new float[] {2, 2, 2}, embeddings.get(2).toArray());
