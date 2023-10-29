@@ -31,10 +31,10 @@ public class GroovySqlTest {
             ids.add(row.id)
             embeddings.add(row.embedding == null ? null : new PGvector(row.embedding.getValue()))
         }
-        assertArrayEquals(new Long[] {1L, 3L, 2L, 4L}, ids.toArray())
-        assertArrayEquals(new float[] {1, 1, 1}, embeddings.get(0).toArray())
-        assertArrayEquals(new float[] {1, 1, 2}, embeddings.get(1).toArray())
-        assertArrayEquals(new float[] {2, 2, 2}, embeddings.get(2).toArray())
+        assertArrayEquals([1, 3, 2, 4] as Long[], ids.toArray())
+        assertArrayEquals([1, 1, 1] as float[], embeddings.get(0).toArray())
+        assertArrayEquals([1, 1, 2] as float[], embeddings.get(1).toArray())
+        assertArrayEquals([2, 2, 2] as float[], embeddings.get(2).toArray())
         assertNull(embeddings.get(3))
 
         sql.execute "CREATE INDEX ON groovy_sql_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)"
