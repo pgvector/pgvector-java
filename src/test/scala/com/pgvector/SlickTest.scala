@@ -44,7 +44,7 @@ class SlickTest {
         // check
         val ids = rows.map(r => r._1)
         val embeddings = rows.map(r => new PGvector(r._2))
-        assertArrayEquals(Array[Int](1, 3, 2), ids.toArray)
+        assertEquals(List(1, 3, 2), ids)
         assertArrayEquals(Array[Float](1, 1, 1), embeddings(0).toArray)
         assertArrayEquals(Array[Float](1, 1, 2), embeddings(1).toArray)
         assertArrayEquals(Array[Float](2, 2, 2), embeddings(2).toArray)
