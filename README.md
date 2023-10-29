@@ -31,6 +31,7 @@ And follow the instructions for your database library:
 - [JDBC (Java)](#jdbc-java)
 - [Spring JDBC](#spring-jdbc)
 - [JDBC (Kotlin)](#jdbc-kotlin)
+- [Groovy SQL](#groovy-sql)
 - [JDBC (Scala)](#jdbc-scala)
 - [Slick](#slick)
 
@@ -202,6 +203,54 @@ indexStmt.executeUpdate("CREATE INDEX ON items USING hnsw (embedding vector_l2_o
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
 
 See a [full example](src/test/kotlin/com/pgvector/JDBCKotlinTest.kt)
+
+## Groovy SQL
+
+Import the `PGvector` class
+
+```groovy
+import com.pgvector.PGvector
+```
+
+Enable the extension
+
+```groovy
+sql.execute "CREATE EXTENSION IF NOT EXISTS vector"
+```
+
+Create a table
+
+```groovy
+sql.execute "CREATE TABLE items (id bigserial PRIMARY KEY, embedding vector(3))"
+```
+
+Insert a vector
+
+```groovy
+def params = [new PGvector(new float[] {1, 1, 1})]
+sql.executeInsert "INSERT INTO items (embedding) VALUES (?)", params
+```
+
+Get the nearest neighbors
+
+```groovy
+def params = [new PGvector(new float[] {1, 1, 1})]
+sql.eachRow("SELECT * FROM items ORDER BY embedding <-> ? LIMIT 5", params) { row ->
+    println row.embedding
+}
+```
+
+Add an approximate index
+
+```groovy
+sql.execute "CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)"
+// or
+sql.execute "CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)"
+```
+
+Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
+
+See a [full example](src/test/groovy/com/pgvector/GroovySqlTest.groovy)
 
 ## JDBC (Scala)
 
