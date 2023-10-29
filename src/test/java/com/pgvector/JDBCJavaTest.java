@@ -52,7 +52,7 @@ public class JDBCJavaTest {
             ids.add(rs.getLong("id"));
             embeddings.add((PGvector) rs.getObject("embedding"));
         }
-        assertEquals(Arrays.asList(new Long[]{1L, 3L, 2L, 4L}), ids);
+        assertArrayEquals(new Long[]{1L, 3L, 2L, 4L}, ids.toArray());
         assertArrayEquals(new float[] {1, 1, 1}, embeddings.get(0).toArray());
         assertArrayEquals(new float[] {1, 1, 2}, embeddings.get(1).toArray());
         assertArrayEquals(new float[] {2, 2, 2}, embeddings.get(2).toArray());
