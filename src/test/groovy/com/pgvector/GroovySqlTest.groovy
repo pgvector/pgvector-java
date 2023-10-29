@@ -37,7 +37,7 @@ public class GroovySqlTest {
         assertArrayEquals(new float[] {2, 2, 2}, embeddings.get(2).toArray())
         assertNull(embeddings.get(3))
 
-        sql.executeInsert "CREATE INDEX ON groovy_sql_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)"
+        sql.execute "CREATE INDEX ON groovy_sql_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)"
 
         sql.close()
     }
