@@ -28,12 +28,10 @@ For other build tools, see [this page](https://central.sonatype.com/artifact/com
 
 And follow the instructions for your database library:
 
-- [JDBC (Java)](#jdbc-java)
-- [Spring JDBC](#spring-jdbc)
-- [JDBC (Kotlin)](#jdbc-kotlin)
-- [Groovy SQL](#groovy-sql)
-- [JDBC (Scala)](#jdbc-scala)
-- [Slick](#slick)
+- Java - [JDBC](#jdbc-java), [Spring JDBC](#spring-jdbc)
+- Kotlin - [JDBC](#jdbc-kotlin)
+- Groovy - [Groovy SQL](#groovy-sql)
+- Scala - [JDBC](#jdbc-scala), [Slick](#slick)
 
 ## JDBC (Java)
 
