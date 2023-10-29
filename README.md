@@ -30,7 +30,7 @@ And follow the instructions for your database library:
 
 - Java - [JDBC](#jdbc-java), [Spring JDBC](#spring-jdbc)
 - Kotlin - [JDBC](#jdbc-kotlin)
-- Groovy - [Groovy SQL](#groovy-sql)
+- Groovy - [JDBC](#jdbc-groovy), [Groovy SQL](#groovy-sql)
 - Scala - [JDBC](#jdbc-scala), [Slick](#slick)
 
 ## JDBC (Java)
@@ -201,6 +201,66 @@ indexStmt.executeUpdate("CREATE INDEX ON items USING hnsw (embedding vector_l2_o
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
 
 See a [full example](src/test/kotlin/com/pgvector/JDBCKotlinTest.kt)
+
+## JDBC (Groovy)
+
+Import the `PGvector` class
+
+```groovy
+import com.pgvector.PGvector
+```
+
+Enable the extension
+
+```groovy
+def setupStmt = conn.createStatement()
+setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector")
+```
+
+Register the vector type with your connection
+
+```groovy
+PGvector.addVectorType(conn)
+```
+
+Create a table
+
+```groovy
+def createStmt = conn.createStatement()
+createStmt.executeUpdate("CREATE TABLE items (id bigserial PRIMARY KEY, embedding vector(3))")
+```
+
+Insert a vector
+
+```groovy
+def insertStmt = conn.prepareStatement("INSERT INTO items (embedding) VALUES (?)")
+insertStmt.setObject(1, new PGvector([1, 1, 1] as float[]))
+insertStmt.executeUpdate()
+```
+
+Get the nearest neighbors
+
+```groovy
+def neighborStmt = conn.prepareStatement("SELECT * FROM items ORDER BY embedding <-> ? LIMIT 5")
+neighborStmt.setObject(1, new PGvector([1, 1, 1] as float[]))
+def rs = neighborStmt.executeQuery()
+while (rs.next()) {
+    println((PGvector) rs.getObject("embedding"))
+}
+```
+
+Add an approximate index
+
+```groovy
+def indexStmt = conn.createStatement()
+indexStmt.executeUpdate("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
+// or
+indexStmt.executeUpdate("CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)")
+```
+
+Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
+
+See a [full example](src/test/groovy/com/pgvector/JDBCGroovyTest.java)
 
 ## Groovy SQL
 
