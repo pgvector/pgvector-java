@@ -20,9 +20,9 @@ public class JDBCJavaTest {
         example(true);
     }
 
-    void example(boolean read_binary) throws SQLException {
+    void example(boolean readBinary) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_java_test");
-        if (read_binary) {
+        if (readBinary) {
             conn.unwrap(PGConnection.class).setPrepareThreshold(-1);
         }
 
