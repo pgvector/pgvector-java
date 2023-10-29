@@ -37,6 +37,7 @@ public class JDBCKotlinTest {
             ids.add(rs.getLong("id"))
             embeddings.add(rs.getObject("embedding") as PGvector?)
         }
+        assertEquals(arrayListOf(1L, 3L, 2L, 4L), ids)
         assertArrayEquals(floatArrayOf(1.0f, 1.0f, 1.0f), embeddings.get(0)!!.toArray())
         assertArrayEquals(floatArrayOf(1.0f, 1.0f, 2.0f), embeddings.get(1)!!.toArray())
         assertArrayEquals(floatArrayOf(2.0f, 2.0f, 2.0f), embeddings.get(2)!!.toArray())
