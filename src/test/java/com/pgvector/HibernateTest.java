@@ -2,7 +2,6 @@ package com.pgvector;
 
 import java.math.BigInteger;
 import java.sql.*;
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import com.pgvector.PGvector;
