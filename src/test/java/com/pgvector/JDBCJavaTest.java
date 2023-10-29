@@ -11,16 +11,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class JDBCJavaTest {
     @Test
-    public void readText() throws SQLException {
+    void readText() throws SQLException {
         example(false);
     }
 
     @Test
-    public void readBinary() throws SQLException {
+    void readBinary() throws SQLException {
         example(true);
     }
 
-    private void example(boolean read_binary) throws SQLException {
+    void example(boolean read_binary) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_java_test");
         if (read_binary) {
             conn.unwrap(PGConnection.class).setPrepareThreshold(-1);

@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*
 
 public class JDBCGroovyTest {
     @Test
-    public void example() throws SQLException {
+    void example() throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_java_test")
 
         Statement setupStmt = conn.createStatement()

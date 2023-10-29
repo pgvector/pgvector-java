@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SpringJDBCTest {
     @Test
-    public void example() throws SQLException {
+    void example() throws SQLException {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setUrl("jdbc:postgresql://localhost:5432/pgvector_java_test");
 

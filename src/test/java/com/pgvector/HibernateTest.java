@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class HibernateTest {
     @Test
-    public void example() throws SQLException {
+    void example() throws SQLException {
         // disable logging
         System.setProperty("org.jboss.logging.provider", "slf4j");
 
