@@ -43,9 +43,9 @@ class SlickTest {
       }.flatMap { rows =>
         // check
         assertArrayEquals(Array[Int](1, 3, 2), rows.map(r => r._1).toArray)
-        assertEquals("[1,1,1]", rows(0)._2)
-        assertEquals("[1,1,2]", rows(1)._2)
-        assertEquals("[2,2,2]", rows(2)._2)
+        assertArrayEquals(Array[Float](1, 1, 1), new PGvector(rows(0)._2).toArray)
+        assertArrayEquals(Array[Float](1, 1, 2), new PGvector(rows(1)._2).toArray)
+        assertArrayEquals(Array[Float](2, 2, 2), new PGvector(rows(2)._2).toArray)
 
         // index
         db.run(sqlu"CREATE INDEX ON slick_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
