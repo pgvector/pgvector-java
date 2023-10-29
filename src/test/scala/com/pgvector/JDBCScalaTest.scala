@@ -2,7 +2,10 @@ package com.pgvector
 
 import java.sql.DriverManager
 import com.pgvector.PGvector
+import scala.collection.mutable.ArrayBuffer
 import org.junit.jupiter.api.Test
+
+import org.junit.jupiter.api.Assertions._
 
 class JDBCScalaTest {
   @Test
@@ -28,10 +31,17 @@ class JDBCScalaTest {
     val neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_scala_items ORDER BY embedding <-> ? LIMIT 5")
     neighborStmt.setObject(1, new PGvector(Array[Float](1, 1, 1)))
     val rs = neighborStmt.executeQuery()
+    val ids = ArrayBuffer[Long]()
+    val embeddings = ArrayBuffer[PGvector]()
     while (rs.next()) {
-      println(rs.getLong("id"))
-      println(rs.getObject("embedding").asInstanceOf[PGvector])
+      ids += rs.getLong("id")
+      embeddings += rs.getObject("embedding").asInstanceOf[PGvector]
     }
+    assertArrayEquals(Array[Long](1L, 3L, 2L, 4L), ids.toArray)
+    assertArrayEquals(Array[Float](1, 1, 1), embeddings(0).toArray())
+    assertArrayEquals(Array[Float](1, 1, 2), embeddings(1).toArray())
+    assertArrayEquals(Array[Float](2, 2, 2), embeddings(2).toArray())
+    assertNull(embeddings(3))
 
     val indexStmt = conn.createStatement()
     indexStmt.executeUpdate("CREATE INDEX ON jdbc_scala_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
