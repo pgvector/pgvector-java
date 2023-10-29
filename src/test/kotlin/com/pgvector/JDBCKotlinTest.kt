@@ -5,6 +5,8 @@ import com.pgvector.PGvector
 import org.postgresql.PGConnection
 import org.junit.jupiter.api.Test
 
+import org.junit.jupiter.api.Assertions.*
+
 public class JDBCKotlinTest {
     @Test
     fun example() {
@@ -29,10 +31,16 @@ public class JDBCKotlinTest {
         val neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_kotlin_items ORDER BY embedding <-> ? LIMIT 5")
         neighborStmt.setObject(1, PGvector(floatArrayOf(1.0f, 1.0f, 1.0f)))
         val rs = neighborStmt.executeQuery()
+        val ids = mutableListOf<Long>()
+        val embeddings = mutableListOf<PGvector?>()
         while (rs.next()) {
-            System.out.println(rs.getLong("id"))
-            System.out.println(rs.getObject("embedding") as PGvector?)
+            ids.add(rs.getLong("id"))
+            embeddings.add(rs.getObject("embedding") as PGvector?)
         }
+        assertArrayEquals(floatArrayOf(1.0f, 1.0f, 1.0f), embeddings.get(0)!!.toArray())
+        assertArrayEquals(floatArrayOf(1.0f, 1.0f, 2.0f), embeddings.get(1)!!.toArray())
+        assertArrayEquals(floatArrayOf(2.0f, 2.0f, 2.0f), embeddings.get(2)!!.toArray())
+        assertNull(embeddings.get(3))
 
         val indexStmt = conn.createStatement()
         indexStmt.executeUpdate("CREATE INDEX ON jdbc_kotlin_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
