@@ -1,6 +1,9 @@
 package com.pgvector;
 
+import java.math.BigInteger;
 import java.sql.*;
+import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import com.pgvector.PGvector;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -9,6 +12,8 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HibernateTest {
     @Test
@@ -36,10 +41,17 @@ public class HibernateTest {
             .createNativeQuery("SELECT id, CAST(embedding AS text) FROM hibernate_items ORDER BY embedding <-> CAST(? AS vector) LIMIT 5")
             .setParameter(1, (new PGvector(new float[] {1, 1, 1})).getValue())
             .list();
+        List<Long> ids = new ArrayList<>();
+        List<PGvector> embeddings = new ArrayList<>();
         for (Object[] item : items) {
-            System.out.println(item[0]);
-            System.out.println(item[1]);
+            ids.add(Long.valueOf(((BigInteger) item[0]).longValue()));
+            embeddings.add(item[1] == null ? null : new PGvector((String) item[1]));
         }
+        assertArrayEquals(new Long[]{1L, 3L, 2L, 4L}, ids.toArray());
+        assertArrayEquals(new float[] {1, 1, 1}, embeddings.get(0).toArray());
+        assertArrayEquals(new float[] {1, 1, 2}, embeddings.get(1).toArray());
+        assertArrayEquals(new float[] {2, 2, 2}, embeddings.get(2).toArray());
+        assertNull(embeddings.get(3));
 
         session.getTransaction().commit();
         session.close();
