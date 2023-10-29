@@ -31,8 +31,8 @@ public class JDBCGroovyTest {
         def neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_items ORDER BY embedding <-> ? LIMIT 5")
         neighborStmt.setObject(1, new PGvector([1, 1, 1] as float[]))
         def rs = neighborStmt.executeQuery()
-        def ids = new ArrayList<Long>()
-        def embeddings = new ArrayList<PGvector>()
+        def ids = []
+        def embeddings = []
         while (rs.next()) {
             ids.add(rs.getLong("id"))
             embeddings.add((PGvector) rs.getObject("embedding"))

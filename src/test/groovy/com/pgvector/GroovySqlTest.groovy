@@ -25,8 +25,8 @@ public class GroovySqlTest {
         sql.executeInsert "INSERT INTO groovy_sql_items (embedding) VALUES (?), (?), (?), (?)", params
 
         def embedding = new PGvector([1, 1, 1] as float[])
-        def ids = new ArrayList<Long>()
-        def embeddings = new ArrayList<PGvector>()
+        def ids = []
+        def embeddings = []
         sql.eachRow("SELECT * FROM groovy_sql_items ORDER BY embedding <-> ? LIMIT 5", [embedding]) { row ->
             ids.add(row.id)
             embeddings.add(row.embedding == null ? null : new PGvector(row.embedding.getValue()))
