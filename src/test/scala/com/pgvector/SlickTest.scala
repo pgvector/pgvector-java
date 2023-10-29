@@ -7,9 +7,10 @@ import slick.jdbc.PostgresProfile.api._
 import com.pgvector.PGvector
 import org.junit.jupiter.api.Test
 
-class Items(tag: Tag) extends Table[(String)](tag, "slick_items") {
+class Items(tag: Tag) extends Table[(Int, String)](tag, "slick_items") {
+  def id = column[Int]("id", O.AutoInc, O.PrimaryKey)
   def embedding = column[String]("embedding", O.SqlType("vector(3)"))
-  def * = (embedding)
+  def * = (id, embedding)
 }
 
 class SlickTest {
@@ -36,7 +37,7 @@ class SlickTest {
       }.flatMap { _ =>
         // select
         val embedding = new PGvector(Array[Float](1, 1, 1)).toString
-        db.run(sql"SELECT * FROM slick_items ORDER BY embedding <-> $embedding::vector LIMIT 5".as[(String)].map(println))
+        db.run(sql"SELECT * FROM slick_items ORDER BY embedding <-> $embedding::vector LIMIT 5".as[(Int, String)].map(println))
       }.flatMap { _ =>
         // index
         db.run(sqlu"CREATE INDEX ON slick_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
