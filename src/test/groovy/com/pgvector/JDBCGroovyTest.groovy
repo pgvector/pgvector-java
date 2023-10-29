@@ -22,14 +22,14 @@ public class JDBCGroovyTest {
         createStmt.executeUpdate("CREATE TABLE jdbc_items (id bigserial PRIMARY KEY, embedding vector(3))")
 
         def insertStmt = conn.prepareStatement("INSERT INTO jdbc_items (embedding) VALUES (?), (?), (?), (?)")
-        insertStmt.setObject(1, new PGvector(new float[] {1, 1, 1}))
-        insertStmt.setObject(2, new PGvector(new float[] {2, 2, 2}))
-        insertStmt.setObject(3, new PGvector(new float[] {1, 1, 2}))
+        insertStmt.setObject(1, new PGvector([1, 1, 1] as float[]))
+        insertStmt.setObject(2, new PGvector([2, 2, 2] as float[]))
+        insertStmt.setObject(3, new PGvector([1, 1, 2] as float[]))
         insertStmt.setObject(4, null)
         insertStmt.executeUpdate()
 
         def neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_items ORDER BY embedding <-> ? LIMIT 5")
-        neighborStmt.setObject(1, new PGvector(new float[] {1, 1, 1}))
+        neighborStmt.setObject(1, new PGvector([1, 1, 1] as float[]))
         def rs = neighborStmt.executeQuery()
         def ids = new ArrayList<Long>()
         def embeddings = new ArrayList<PGvector>()
@@ -37,10 +37,10 @@ public class JDBCGroovyTest {
             ids.add(rs.getLong("id"))
             embeddings.add((PGvector) rs.getObject("embedding"))
         }
-        assertArrayEquals(new Long[] {1L, 3L, 2L, 4L}, ids.toArray())
-        assertArrayEquals(new float[] {1, 1, 1}, embeddings.get(0).toArray())
-        assertArrayEquals(new float[] {1, 1, 2}, embeddings.get(1).toArray())
-        assertArrayEquals(new float[] {2, 2, 2}, embeddings.get(2).toArray())
+        assertArrayEquals([1, 3, 2, 4] as Long[], ids.toArray())
+        assertArrayEquals([1, 1, 1] as float[], embeddings.get(0).toArray())
+        assertArrayEquals([1, 1, 2] as float[], embeddings.get(1).toArray())
+        assertArrayEquals([2, 2, 2] as float[], embeddings.get(2).toArray())
         assertNull(embeddings.get(3))
 
         def indexStmt = conn.createStatement()
