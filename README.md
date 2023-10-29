@@ -227,14 +227,14 @@ sql.execute "CREATE TABLE items (id bigserial PRIMARY KEY, embedding vector(3))"
 Insert a vector
 
 ```groovy
-def params = [new PGvector(new float[] {1, 1, 1})]
+def params = [new PGvector([1, 1, 1] as float[])]
 sql.executeInsert "INSERT INTO items (embedding) VALUES (?)", params
 ```
 
 Get the nearest neighbors
 
 ```groovy
-def params = [new PGvector(new float[] {1, 1, 1})]
+def params = [new PGvector([1, 1, 1] as float[])]
 sql.eachRow("SELECT * FROM items ORDER BY embedding <-> ? LIMIT 5", params) { row ->
     println row.embedding
 }

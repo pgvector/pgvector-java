@@ -17,14 +17,14 @@ public class GroovySqlTest {
         sql.execute "CREATE TABLE groovy_sql_items (id bigserial PRIMARY KEY, embedding vector(3))"
 
         def params = [
-            new PGvector(new float[] {1, 1, 1}),
-            new PGvector(new float[] {2, 2, 2}),
-            new PGvector(new float[] {1, 1, 2}),
+            new PGvector([1, 1, 1] as float[]),
+            new PGvector([2, 2, 2] as float[]),
+            new PGvector([1, 1, 2] as float[]),
             null
         ]
         sql.executeInsert "INSERT INTO groovy_sql_items (embedding) VALUES (?), (?), (?), (?)", params
 
-        def embedding = new PGvector(new float[] {1, 1, 1})
+        def embedding = new PGvector([1, 1, 1] as float[])
         def ids = new ArrayList<Long>()
         def embeddings = new ArrayList<PGvector>()
         sql.eachRow("SELECT * FROM groovy_sql_items ORDER BY embedding <-> ? LIMIT 5", [embedding]) { row ->
