@@ -14,21 +14,21 @@ public class JDBCGroovyTest {
 
         def setupStmt = conn.createStatement()
         setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector")
-        setupStmt.executeUpdate("DROP TABLE IF EXISTS jdbc_items")
+        setupStmt.executeUpdate("DROP TABLE IF EXISTS jdbc_groovy_items")
 
         PGvector.addVectorType(conn)
 
         def createStmt = conn.createStatement()
-        createStmt.executeUpdate("CREATE TABLE jdbc_items (id bigserial PRIMARY KEY, embedding vector(3))")
+        createStmt.executeUpdate("CREATE TABLE jdbc_groovy_items (id bigserial PRIMARY KEY, embedding vector(3))")
 
-        def insertStmt = conn.prepareStatement("INSERT INTO jdbc_items (embedding) VALUES (?), (?), (?), (?)")
+        def insertStmt = conn.prepareStatement("INSERT INTO jdbc_groovy_items (embedding) VALUES (?), (?), (?), (?)")
         insertStmt.setObject(1, new PGvector([1, 1, 1] as float[]))
         insertStmt.setObject(2, new PGvector([2, 2, 2] as float[]))
         insertStmt.setObject(3, new PGvector([1, 1, 2] as float[]))
         insertStmt.setObject(4, null)
         insertStmt.executeUpdate()
 
-        def neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_items ORDER BY embedding <-> ? LIMIT 5")
+        def neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_groovy_items ORDER BY embedding <-> ? LIMIT 5")
         neighborStmt.setObject(1, new PGvector([1, 1, 1] as float[]))
         def rs = neighborStmt.executeQuery()
         def ids = []
@@ -44,7 +44,7 @@ public class JDBCGroovyTest {
         assertNull(embeddings.get(3))
 
         def indexStmt = conn.createStatement()
-        indexStmt.executeUpdate("CREATE INDEX ON jdbc_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
+        indexStmt.executeUpdate("CREATE INDEX ON jdbc_groovy_items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
 
         conn.close()
     }
