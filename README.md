@@ -12,9 +12,9 @@ For Maven, add to `pom.xml` under `<dependencies>`:
 
 ```xml
 <dependency>
-  <groupId>com.pgvector</groupId>
-  <artifactId>pgvector</artifactId>
-  <version>0.1.3</version>
+    <groupId>com.pgvector</groupId>
+    <artifactId>pgvector</artifactId>
+    <version>0.1.3</version>
 </dependency>
 ```
 
