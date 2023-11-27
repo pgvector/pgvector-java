@@ -28,7 +28,7 @@ For other build tools, see [this page](https://central.sonatype.com/artifact/com
 
 And follow the instructions for your database library:
 
-- Java - [JDBC](#jdbc-java), [Spring JDBC](#spring-jdbc)
+- Java - [JDBC](#jdbc-java), [Spring JDBC](#spring-jdbc), [Hibernate](#hibernate)
 - Kotlin - [JDBC](#jdbc-kotlin)
 - Groovy - [JDBC](#jdbc-groovy), [Groovy SQL](#groovy-sql)
 - Scala - [JDBC](#jdbc-scala), [Slick](#slick)
@@ -141,6 +141,64 @@ jdbcTemplate.execute("CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
 
 See a [full example](src/test/java/com/pgvector/SpringJDBCTest.java)
+
+## Hibernate
+
+Hibernate 6.4+ has a [vector module](https://docs.jboss.org/hibernate/orm/6.4/userguide/html_single/Hibernate_User_Guide.html#vector-module) (use this instead of `com.pgvector.pgvector`).
+
+For Maven, add to `pom.xml` under `<dependencies>`:
+
+```xml
+<dependency>
+    <groupId>org.hibernate.orm</groupId>
+    <artifactId>hibernate-vector</artifactId>
+    <version>6.4.0.Final</version>
+</dependency>
+```
+
+Define an entity
+
+```java
+import jakarta.persistence.*;
+import org.hibernate.annotations.Array;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
+@Entity
+class Item {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column
+    @JdbcTypeCode(SqlTypes.VECTOR)
+    @Array(length = 3) // dimensions
+    private float[] embedding;
+
+    public void setEmbedding(float[] embedding) {
+        this.embedding = embedding;
+    }
+}
+```
+
+Insert a vector
+
+```java
+Item item = new Item();
+item.setEmbedding(new float[] {1, 1, 1});
+entityManager.persist(item);
+```
+
+Get the nearest neighbors
+
+```java
+List<Item> items = entityManager
+    .createQuery("FROM Item ORDER BY l2_distance(embedding, :embedding) LIMIT 5", Item.class)
+    .setParameter("embedding", new float[] {1, 1, 1})
+    .getResultList();
+```
+
+See a [full example](src/test/java/com/pgvector/HibernateTest.java)
 
 ## JDBC (Kotlin)
 

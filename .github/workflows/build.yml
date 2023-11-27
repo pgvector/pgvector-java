@@ -25,4 +25,7 @@ jobs:
           make
           sudo make install
       - run: psql -d pgvector_java_test -c "CREATE EXTENSION vector"
+      # Hibernate 6.4 requires Java 11+
+      - if: ${{ matrix.java == 8 }}
+        run: rm src/test/java/com/pgvector/HibernateTest.java
       - run: mvn -B -ntp test
