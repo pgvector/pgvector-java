@@ -5,7 +5,8 @@ import com.pgvector.PGvector
 import scala.collection.mutable.ArrayBuffer
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions._
+import org.junit.jupiter.api.Assertions.assertArrayEquals
+import org.junit.jupiter.api.Assertions.assertNull
 
 class JDBCScalaTest {
   @Test

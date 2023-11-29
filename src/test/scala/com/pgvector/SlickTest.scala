@@ -7,7 +7,8 @@ import slick.jdbc.PostgresProfile.api._
 import com.pgvector.PGvector
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions._
+import org.junit.jupiter.api.Assertions.assertArrayEquals
+import org.junit.jupiter.api.Assertions.assertEquals
 
 class Items(tag: Tag) extends Table[(Int, String)](tag, "slick_items") {
   def id = column[Int]("id", O.AutoInc, O.PrimaryKey)
