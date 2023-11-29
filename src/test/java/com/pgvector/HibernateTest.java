@@ -1,6 +1,13 @@
 package com.pgvector;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.Table;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,11 @@
 package com.pgvector;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import com.pgvector.PGvector;
@@ -12,12 +17,12 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class JDBCJavaTest {
     @Test
-    void readText() throws SQLException {
+    void testReadText() throws SQLException {
         example(false);
     }
 
     @Test
-    void readBinary() throws SQLException {
+    void testReadBinary() throws SQLException {
         example(true);
     }
 

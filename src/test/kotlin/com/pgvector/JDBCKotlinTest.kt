@@ -1,6 +1,6 @@
 package com.pgvector
 
-import java.sql.*
+import java.sql.DriverManager
 import com.pgvector.PGvector
 import org.postgresql.PGConnection
 import org.junit.jupiter.api.Test
