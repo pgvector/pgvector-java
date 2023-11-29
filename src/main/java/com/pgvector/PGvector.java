@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
 import org.postgresql.PGConnection;
 import org.postgresql.util.ByteConverter;
 import org.postgresql.util.PGBinaryObject;
@@ -28,6 +29,22 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     public PGvector(float[] v) {
         this();
         vec = v;
+    }
+
+    /**
+     * Constructor
+     */
+    public PGvector(List<Float> v) {
+        this();
+        if (v == null) {
+            vec = null;
+        } else {
+            vec = new float[v.size()];
+            int i = 0;
+            for (Float f : v) {
+                vec[i++] = f.floatValue();
+            }
+        }
     }
 
     /**
