@@ -33,6 +33,10 @@ And follow the instructions for your database library:
 - Groovy - [JDBC](#jdbc-groovy), [Groovy SQL](#groovy-sql)
 - Scala - [JDBC](#jdbc-scala), [Slick](#slick)
 
+Or check out an example:
+
+- [Embeddings](src/test/java/com/pgvector/OpenAITest.java) with OpenAI
+
 ## JDBC (Java)
 
 Import the `PGvector` class

@@ -25,7 +25,9 @@ jobs:
           make
           sudo make install
       - run: psql -d pgvector_java_test -c "CREATE EXTENSION vector"
-      # Hibernate 6.4 requires Java 11+
+      # Hibernate 6.4 and HttpClient require Java 11+
       - if: ${{ matrix.java == 8 }}
-        run: rm src/test/java/com/pgvector/HibernateTest.java
+        run: |
+          rm src/test/java/com/pgvector/HibernateTest.java
+          rm src/test/java/com/pgvector/OpenAITest.java
       - run: mvn -B -ntp test
