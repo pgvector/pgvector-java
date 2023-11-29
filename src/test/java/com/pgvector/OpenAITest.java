@@ -80,7 +80,7 @@ public class OpenAITest {
             .build();
         HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 
-        List<float[]> embeddings = new ArrayList<float[]>();
+        List<float[]> embeddings = new ArrayList<>();
         for (JsonNode n : mapper.readTree(response.body()).get("data")) {
             float[] embedding = new float[n.get("embedding").size()];
             int i = 0;
