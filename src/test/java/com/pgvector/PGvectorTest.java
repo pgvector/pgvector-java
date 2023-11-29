@@ -35,7 +35,7 @@ public class PGvectorTest {
     }
 
     @Test
-    void testGetValue() throws SQLException {
+    void testGetValue() {
         PGvector vec = new PGvector(new float[] {1, 2, 3});
         assertEquals("[1.0,2.0,3.0]", vec.getValue());
     }
