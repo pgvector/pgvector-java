@@ -82,7 +82,7 @@ public class OpenAITest {
 
         List<float[]> embeddings = new ArrayList<float[]>();
         for (JsonNode n : mapper.readTree(response.body()).get("data")) {
-            float[] embedding = new float[1536];
+            float[] embedding = new float[n.get("embedding").size()];
             int i = 0;
             for (JsonNode v : n.get("embedding")) {
                 embedding[i++] = (float) v.asDouble();
