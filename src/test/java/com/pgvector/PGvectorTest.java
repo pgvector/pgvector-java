@@ -21,8 +21,15 @@ public class PGvectorTest {
     }
 
     @Test
-    void testListConstructor() {
+    void testFloatListConstructor() {
         Float[] a = new Float[] {Float.valueOf(1), Float.valueOf(2), Float.valueOf(3)};
+        PGvector vec = new PGvector(Arrays.asList(a));
+        assertArrayEquals(new float[] {1, 2, 3}, vec.toArray());
+    }
+
+    @Test
+    void testDoubleListConstructor() {
+        Double[] a = new Double[] {Double.valueOf(1), Double.valueOf(2), Double.valueOf(3)};
         PGvector vec = new PGvector(Arrays.asList(a));
         assertArrayEquals(new float[] {1, 2, 3}, vec.toArray());
     }

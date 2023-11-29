@@ -1,6 +1,6 @@
 ## 0.1.4 (unreleased)
 
-- Added `List<Float>` constructor
+- Added `List` constructor
 
 ## 0.1.3 (2023-07-18)
 
