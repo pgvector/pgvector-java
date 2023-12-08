@@ -26,6 +26,8 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
 
     /**
      * Constructor
+     *
+     * @param v float array
      */
     public PGvector(float[] v) {
         this();
@@ -34,6 +36,9 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
 
     /**
      * Constructor
+     *
+     * @param <T> number
+     * @param v list of numbers
      */
     public <T extends Number> PGvector(List<T> v) {
         this();
@@ -50,6 +55,9 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
 
     /**
      * Constructor
+     *
+     * @param s text representation of a vector
+     * @throws SQLException exception
      */
     public PGvector(String s) throws SQLException {
         this();
@@ -125,6 +133,8 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
 
     /**
      * Returns an array
+     *
+     * @return an array
      */
     public float[] toArray() {
         return vec;
@@ -132,6 +142,9 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
 
     /**
      * Registers the vector type
+     *
+     * @param conn connection
+     * @throws SQLException exception
      */
     public static void addVectorType(Connection conn) throws SQLException {
         conn.unwrap(PGConnection.class).addDataType("vector", PGvector.class);
