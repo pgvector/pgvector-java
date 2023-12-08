@@ -14,14 +14,14 @@ For Maven, add to `pom.xml` under `<dependencies>`:
 <dependency>
     <groupId>com.pgvector</groupId>
     <artifactId>pgvector</artifactId>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
 </dependency>
 ```
 
 For sbt, add to `build.sbt`:
 
 ```sbt
-libraryDependencies += "com.pgvector" % "pgvector" % "0.1.3"
+libraryDependencies += "com.pgvector" % "pgvector" % "0.1.4"
 ```
 
 For other build tools, see [this page](https://central.sonatype.com/artifact/com.pgvector/pgvector).
