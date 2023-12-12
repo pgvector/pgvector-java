@@ -37,7 +37,7 @@ public class SpringJDBCTest {
         List<Map<String, Object>> rows = jdbcTemplate.queryForList("SELECT * FROM spring_items ORDER BY embedding <-> ? LIMIT 5", neighborParams);
         List<Long> ids = new ArrayList<>();
         List<PGvector> embeddings = new ArrayList<>();
-        for (Map row : rows) {
+        for (Map<String, Object> row : rows) {
             ids.add((Long) row.get("id"));
             embeddings.add(row.get("embedding") == null ? null : new PGvector(((PGobject) row.get("embedding")).getValue()));
         }

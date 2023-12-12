@@ -187,7 +187,7 @@
                 <version>3.11.0</version>
                 <configuration>
                     <compilerArgs>
-                        <arg>-Xlint:all</arg>
+                        <arg>-Xlint:all,-options</arg>
                     </compilerArgs>
                 </configuration>
                 <executions>
