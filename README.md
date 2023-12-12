@@ -28,7 +28,7 @@ For other build tools, see [this page](https://central.sonatype.com/artifact/com
 
 And follow the instructions for your database library:
 
-- Java - [JDBC](#jdbc-java), [Spring JDBC](#spring-jdbc), [Hibernate](#hibernate)
+- Java - [JDBC](#jdbc-java), [Spring JDBC](#spring-jdbc), [Hibernate](#hibernate), [R2DBC](#r2dbc)
 - Kotlin - [JDBC](#jdbc-kotlin)
 - Groovy - [JDBC](#jdbc-groovy), [Groovy SQL](#groovy-sql)
 - Scala - [JDBC](#jdbc-scala), [Slick](#slick)
@@ -203,6 +203,20 @@ List<Item> items = entityManager
 ```
 
 See a [full example](src/test/java/com/pgvector/HibernateTest.java)
+
+## R2DBC
+
+R2DBC PostgreSQL 1.0.3+ supports the [vector type](https://github.com/pgjdbc/r2dbc-postgresql#data-type-mapping) (use this instead of `com.pgvector.pgvector`).
+
+For Maven, add to `pom.xml` under `<dependencies>`:
+
+```xml
+<dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>r2dbc-postgresql</artifactId>
+    <version>1.0.3.RELEASE</version>
+</dependency>
+```
 
 ## JDBC (Kotlin)
 
