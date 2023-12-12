@@ -169,14 +169,8 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>addSources</goal>
                             <goal>addTestSources</goal>
-                            <goal>generateStubs</goal>
-                            <goal>compile</goal>
-                            <goal>generateTestStubs</goal>
                             <goal>compileTests</goal>
-                            <goal>removeStubs</goal>
-                            <goal>removeTestStubs</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -194,13 +188,6 @@
                     <execution>
                         <id>default-testCompile</id>
                         <phase>none</phase>
-                    </execution>
-                    <execution>
-                        <id>java-compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
                     </execution>
                     <execution>
                         <id>java-test-compile</id>
