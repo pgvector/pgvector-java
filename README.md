@@ -4,7 +4,7 @@
 
 Supports [JDBC](https://jdbc.postgresql.org/), [Spring JDBC](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html), [Groovy SQL](https://docs.groovy-lang.org/latest/html/documentation/sql-userguide.html), and [Slick](https://github.com/slick/slick)
 
-[![Build Status](https://github.com/pgvector/pgvector-java/workflows/build/badge.svg?branch=master)](https://github.com/pgvector/pgvector-java/actions)
+[![Build Status](https://github.com/pgvector/pgvector-java/actions/workflows/build.yml/badge.svg)](https://github.com/pgvector/pgvector-java/actions)
 
 ## Getting Started
 
