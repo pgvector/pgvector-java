@@ -88,9 +88,9 @@ Add an approximate index
 
 ```java
 Statement indexStmt = conn.createStatement();
-indexStmt.executeUpdate("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
-// or
 indexStmt.executeUpdate("CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)");
+// or
+indexStmt.executeUpdate("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
@@ -137,9 +137,9 @@ for (Map row : rows) {
 Add an approximate index
 
 ```java
-jdbcTemplate.execute("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
-// or
 jdbcTemplate.execute("CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)");
+// or
+jdbcTemplate.execute("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)");
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
@@ -269,9 +269,9 @@ Add an approximate index
 
 ```kotlin
 val indexStmt = conn.createStatement()
-indexStmt.executeUpdate("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
-// or
 indexStmt.executeUpdate("CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)")
+// or
+indexStmt.executeUpdate("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
@@ -329,9 +329,9 @@ Add an approximate index
 
 ```groovy
 def indexStmt = conn.createStatement()
-indexStmt.executeUpdate("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
-// or
 indexStmt.executeUpdate("CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)")
+// or
+indexStmt.executeUpdate("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
@@ -377,9 +377,9 @@ sql.eachRow("SELECT * FROM items ORDER BY embedding <-> ? LIMIT 5", params) { ro
 Add an approximate index
 
 ```groovy
-sql.execute "CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)"
-// or
 sql.execute "CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)"
+// or
+sql.execute "CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)"
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
@@ -437,9 +437,9 @@ Add an approximate index
 
 ```scala
 val indexStmt = conn.createStatement()
-indexStmt.executeUpdate("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
-// or
 indexStmt.executeUpdate("CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)")
+// or
+indexStmt.executeUpdate("CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
@@ -486,9 +486,9 @@ db.run(sql"SELECT * FROM items ORDER BY embedding <-> $embedding::vector LIMIT 5
 Add an approximate index
 
 ```scala
-db.run(sqlu"CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
-// or
 db.run(sqlu"CREATE INDEX ON items USING hnsw (embedding vector_l2_ops)")
+// or
+db.run(sqlu"CREATE INDEX ON items USING ivfflat (embedding vector_l2_ops) WITH (lists = 100)")
 ```
 
 Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distance
