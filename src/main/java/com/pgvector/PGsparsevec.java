@@ -10,16 +10,27 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+/**
+ * PGsparsevec class
+ */
 public class PGsparsevec extends PGobject implements Serializable, Cloneable {
 
     private int dimension = -1;
     private Map<Integer, Float> sparsevecMap;
     private static final String TYPE = "sparsevec";
 
+    /**
+     * Constructor
+     */
     public PGsparsevec() {
         setType(TYPE);
     }
 
+    /**
+     * Constructor
+     *
+     * @param dimension dimension of sparse vector
+     */
     public PGsparsevec(int dimension) {
         setType(TYPE);
 
@@ -31,6 +42,12 @@ public class PGsparsevec extends PGobject implements Serializable, Cloneable {
         this.sparsevecMap = new TreeMap<>();
     }
 
+    /**
+     * Constructor
+     *
+     * @param dimension dimension of sparse vector
+     * @param sparsevecMap map of sparse vector
+     */
     public <T extends Number> PGsparsevec(int dimension, Map<Integer, T> sparsevecMap) {
         setType(TYPE);
 
@@ -46,44 +63,70 @@ public class PGsparsevec extends PGobject implements Serializable, Cloneable {
         }
     }
 
+    /**
+     * Constructor
+     *
+     * @param value text representation of a sparse vector
+     * @throws SQLException exception
+     */
     public PGsparsevec(String value) throws SQLException {
         setType(TYPE);
         setValue(value);
     }
 
+    /**
+     * Return the dimension size of the sparse vector.
+     * @return dimension
+     */
     public int getDimension() {
         return dimension;
     }
 
+    /**
+     * Return the sparse vector map
+     * @return vector map
+     */
     public Map<Integer, Float> getVector() {
         return sparsevecMap;
     }
 
-    public void putValue(int index, Number number) {
-        if ( number == null ) {
+    /**
+     * Set the value at the offset of the sparse vector.
+     * @param offset offset of sparse vector
+     * @param value value
+     */
+    public void putValue(int offset, Number value) {
+        if ( value == null ) {
             throw new IllegalStateException("number must not be null.");
         }
 
-        this.putValue(index, number.floatValue());
+        this.putValue(offset, value.floatValue());
     }
 
-    public void putValue(int index, float value) {
+    /**
+     * Set the value at the offset of the sparse vector.
+     * @param offset offset of sparse vector
+     * @param value value
+     */
+    public void putValue(int offset, float value) {
         if ( dimension == -1 ) {
             throw new IllegalStateException("Dimension has not been initialized.");
         }
 
-        if ( dimension <= index ) {
-            throw new IllegalStateException("Index must be less than the size of the dimension.");
+        if ( dimension <= offset ) {
+            throw new IllegalStateException("offset must be less than the size of the dimension.");
         }
 
         if ( sparsevecMap == null ) {
             sparsevecMap = new TreeMap<>();
         }
 
-        sparsevecMap.put(index, value);
+        sparsevecMap.put(offset, value);
     }
 
-
+    /**
+     * Sets the value from a text representation of a sparse vector
+     */
     public void setValue(String value) throws SQLException {
         if (value == null) {
             this.dimension = -1;
@@ -104,10 +147,10 @@ public class PGsparsevec extends PGobject implements Serializable, Cloneable {
                 String[] sparseVectorPartArray = sparseVectorParts.split(",");
 
                 for (String eachVectorPart : sparseVectorPartArray) {
-                    String[] indexValuePart = eachVectorPart.split(":");
-                    int index = Integer.parseInt(indexValuePart[0]);
-                    float floatValue = Float.parseFloat(indexValuePart[1]);
-                    tempSparsevecMap.put(index, floatValue);
+                    String[] offsetValuePart = eachVectorPart.split(":");
+                    int offset = Integer.parseInt(offsetValuePart[0]);
+                    float floatValue = Float.parseFloat(offsetValuePart[1]);
+                    tempSparsevecMap.put(offset, floatValue);
                 }
             } catch (Exception exception) {
                 throw new SQLException("The vector part of the sparsevec is invalid.", exception);
@@ -118,6 +161,9 @@ public class PGsparsevec extends PGobject implements Serializable, Cloneable {
         }
     }
 
+    /**
+     * Returns the text representation of a sparse vector
+     */
     public String getValue() {
         if ( this.sparsevecMap == null ) {
             return null;
@@ -136,7 +182,13 @@ public class PGsparsevec extends PGobject implements Serializable, Cloneable {
         return sb.toString();
     }
 
-    public static void addVectorType(Connection connection) throws SQLException {
-        ((PGConnection)connection.unwrap(PGConnection.class)).addDataType(TYPE, PGsparsevec.class);
+    /**
+     * Registers the vector type
+     *
+     * @param conn connection
+     * @throws SQLException exception
+     */
+    public static void addVectorType(Connection conn) throws SQLException {
+        conn.unwrap(PGConnection.class).addDataType(TYPE, PGsparsevec.class);
     }
 }
