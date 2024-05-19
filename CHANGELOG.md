@@ -1,3 +1,7 @@
+## 0.1.5 (unreleased)
+
+- Added support for `halfvec` type
+
 ## 0.1.4 (2023-12-08)
 
 - Added `List` constructor

@@ -68,4 +68,40 @@ public class JDBCJavaTest {
 
         conn.close();
     }
+
+    @Test
+    void testHalfvec() throws SQLException {
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_java_test");
+
+        Statement setupStmt = conn.createStatement();
+        setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector");
+        setupStmt.executeUpdate("DROP TABLE IF EXISTS jdbc_items");
+
+        PGhalfvec.addHalfvecType(conn);
+
+        Statement createStmt = conn.createStatement();
+        createStmt.executeUpdate("CREATE TABLE jdbc_items (id bigserial PRIMARY KEY, embedding halfvec(3))");
+
+        PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO jdbc_items (embedding) VALUES (?), (?), (?), (?)");
+        insertStmt.setObject(1, new PGhalfvec(new float[] {1, 1, 1}));
+        insertStmt.setObject(2, new PGhalfvec(new float[] {2, 2, 2}));
+        insertStmt.setObject(3, new PGhalfvec(new float[] {1, 1, 2}));
+        insertStmt.setObject(4, null);
+        insertStmt.executeUpdate();
+
+        PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_items ORDER BY embedding <-> ? LIMIT 5");
+        neighborStmt.setObject(1, new PGhalfvec(new float[] {1, 1, 1}));
+        ResultSet rs = neighborStmt.executeQuery();
+        List<Long> ids = new ArrayList<>();
+        List<PGhalfvec> embeddings = new ArrayList<>();
+        while (rs.next()) {
+            ids.add(rs.getLong("id"));
+            embeddings.add((PGhalfvec) rs.getObject("embedding"));
+        }
+        assertArrayEquals(new Long[] {1L, 3L, 2L, 4L}, ids.toArray());
+        assertArrayEquals(new float[] {1, 1, 1}, embeddings.get(0).toArray());
+        assertArrayEquals(new float[] {1, 1, 2}, embeddings.get(1).toArray());
+        assertArrayEquals(new float[] {2, 2, 2}, embeddings.get(2).toArray());
+        assertNull(embeddings.get(3));
+    }
 }
