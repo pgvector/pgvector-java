@@ -13,6 +13,10 @@ import org.postgresql.util.PGobject;
  * PGhalfvec class
  */
 public class PGhalfvec extends PGobject implements Serializable, Cloneable {
+    /*
+     * Use float and text format for now since Float.float16ToFloat/floatToFloat16
+     * are not available until Java 20
+     */
     private float[] vec;
 
     /**
