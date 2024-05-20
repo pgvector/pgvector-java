@@ -1,6 +1,6 @@
 ## 0.1.5 (unreleased)
 
-- Added support for `halfvec` type
+- Added support for `halfvec` and `sparsevec` types
 
 ## 0.1.4 (2023-12-08)
 

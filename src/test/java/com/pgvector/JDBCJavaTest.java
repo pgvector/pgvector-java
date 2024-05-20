@@ -116,4 +116,52 @@ public class JDBCJavaTest {
         assertArrayEquals(new float[] {2, 2, 2}, embeddings.get(2).toArray());
         assertNull(embeddings.get(3));
     }
+
+    @Test
+    void testSparsevecReadText() throws SQLException {
+        sparsevecExample(false);
+    }
+
+    @Test
+    void testSparsevecReadBinary() throws SQLException {
+        sparsevecExample(true);
+    }
+
+    void sparsevecExample(boolean readBinary) throws SQLException {
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_java_test");
+        if (readBinary) {
+            conn.unwrap(PGConnection.class).setPrepareThreshold(-1);
+        }
+
+        Statement setupStmt = conn.createStatement();
+        setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector");
+        setupStmt.executeUpdate("DROP TABLE IF EXISTS jdbc_items");
+
+        PGsparsevec.addSparsevecType(conn);
+
+        Statement createStmt = conn.createStatement();
+        createStmt.executeUpdate("CREATE TABLE jdbc_items (id bigserial PRIMARY KEY, embedding sparsevec(3))");
+
+        PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO jdbc_items (embedding) VALUES (?), (?), (?), (?)");
+        insertStmt.setObject(1, new PGsparsevec(new float[] {1, 1, 1}));
+        insertStmt.setObject(2, new PGsparsevec(new float[] {2, 2, 2}));
+        insertStmt.setObject(3, new PGsparsevec(new float[] {1, 1, 2}));
+        insertStmt.setObject(4, null);
+        insertStmt.executeUpdate();
+
+        PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM jdbc_items ORDER BY embedding <-> ? LIMIT 5");
+        neighborStmt.setObject(1, new PGsparsevec(new float[] {1, 1, 1}));
+        ResultSet rs = neighborStmt.executeQuery();
+        List<Long> ids = new ArrayList<>();
+        List<PGsparsevec> embeddings = new ArrayList<>();
+        while (rs.next()) {
+            ids.add(rs.getLong("id"));
+            embeddings.add((PGsparsevec) rs.getObject("embedding"));
+        }
+        assertArrayEquals(new Long[] {1L, 3L, 2L, 4L}, ids.toArray());
+        assertArrayEquals(new float[] {1, 1, 1}, embeddings.get(0).toArray());
+        assertArrayEquals(new float[] {1, 1, 2}, embeddings.get(1).toArray());
+        assertArrayEquals(new float[] {2, 2, 2}, embeddings.get(2).toArray());
+        assertNull(embeddings.get(3));
+    }
 }
