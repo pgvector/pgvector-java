@@ -17,16 +17,16 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class JDBCJavaTest {
     @Test
-    void testReadText() throws SQLException {
-        example(false);
+    void testVectorReadText() throws SQLException {
+        vectorExample(false);
     }
 
     @Test
-    void testReadBinary() throws SQLException {
-        example(true);
+    void testVectorReadBinary() throws SQLException {
+        vectorExample(true);
     }
 
-    void example(boolean readBinary) throws SQLException {
+    void vectorExample(boolean readBinary) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_java_test");
         if (readBinary) {
             conn.unwrap(PGConnection.class).setPrepareThreshold(-1);
@@ -70,8 +70,20 @@ public class JDBCJavaTest {
     }
 
     @Test
-    void testHalfvec() throws SQLException {
+    void testHalfvecReadText() throws SQLException {
+        halfvecExample(false);
+    }
+
+    @Test
+    void testHalfvecReadBinary() throws SQLException {
+        halfvecExample(true);
+    }
+
+    void halfvecExample(boolean readBinary) throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_java_test");
+        if (readBinary) {
+            conn.unwrap(PGConnection.class).setPrepareThreshold(-1);
+        }
 
         Statement setupStmt = conn.createStatement();
         setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector");
