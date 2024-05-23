@@ -113,6 +113,24 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
+     * Returns the length
+     *
+     * @return an array
+     */
+    public int length() {
+        return length;
+    }
+
+    /**
+     * Returns a byte array
+     *
+     * @return an array
+     */
+    public byte[] toByteArray() {
+        return data;
+    }
+
+    /**
      * Returns an array
      *
      * @return an array
