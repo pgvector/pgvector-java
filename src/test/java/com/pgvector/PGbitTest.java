@@ -12,12 +12,18 @@ public class PGbitTest {
     @Test
     void testArrayConstructor() {
         PGbit vec = new PGbit(new boolean[] {true, false, true});
-        assertEquals("101", vec.getValue());
+        assertArrayEquals(new boolean[] {true, false, true}, vec.toArray());
     }
 
     @Test
     void testStringConstructor() throws SQLException {
         PGbit vec = new PGbit("101");
+        assertArrayEquals(new boolean[] {true, false, true}, vec.toArray());
+    }
+
+    @Test
+    void testGetValue() {
+        PGbit vec = new PGbit(new boolean[] {true, false, true});
         assertEquals("101", vec.getValue());
     }
 }

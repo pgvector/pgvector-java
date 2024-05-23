@@ -113,6 +113,19 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
+     * Returns an array
+     *
+     * @return an array
+     */
+    public boolean[] toArray() {
+        boolean[] bits = new boolean[length];
+        for (int i = 0; i < length; i++) {
+            bits[i] = ((data[i / 8] >> (7 - (i % 8))) & 1) == 1;
+        }
+        return bits;
+    }
+
+    /**
      * Registers the bit type
      *
      * @param conn connection
