@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import org.postgresql.PGConnection;
 import org.postgresql.util.ByteConverter;
@@ -90,6 +92,36 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
             }
 
         }
+    }
+
+    /**
+     * Constructor
+     *
+     * @param map <Integer, T> map of non-zero elements
+     * @param dimensions number of dimensions
+     */
+    public <T extends Number> PGsparsevec(Map<Integer, T> map, int dimensions) {
+        this();
+
+        ArrayList<Map.Entry<Integer, T>> elements = new ArrayList<Map.Entry<Integer, T>>();
+        if (!Objects.isNull(map)) {
+            elements.addAll(map.entrySet());
+        }
+        elements.removeIf((e) -> e.getValue().floatValue() == 0);
+        elements.sort((a, b) -> Integer.compare(a.getKey(), b.getKey()));
+
+        int nnz = elements.size();
+        indices = new int[nnz];
+        values = new float[nnz];
+
+        int i = 0;
+        for (Map.Entry<Integer, T> e : elements) {
+            indices[i] = e.getKey().intValue();
+            values[i] = e.getValue().floatValue();
+            i++;
+        }
+
+        this.dimensions = dimensions;
     }
 
     /**
