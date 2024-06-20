@@ -40,4 +40,22 @@ public class PGsparsevecTest {
         PGsparsevec vec = new PGsparsevec(new float[] {1, 0, 2, 0, 3, 0});
         assertEquals("{1:1.0,3:2.0,5:3.0}/6", vec.getValue());
     }
+
+    @Test
+    void testGetDimensions() {
+        PGsparsevec vec = new PGsparsevec(new float[] {1, 0, 2, 0, 3, 0});
+        assertEquals(6, vec.getDimensions());
+    }
+
+    @Test
+    void testGetIndices() {
+        PGsparsevec vec = new PGsparsevec(new float[] {1, 0, 2, 0, 3, 0});
+        assertArrayEquals(new int[] {0, 2, 4}, vec.getIndices());
+    }
+
+    @Test
+    void testGetValues() {
+        PGsparsevec vec = new PGsparsevec(new float[] {1, 0, 2, 0, 3, 0});
+        assertArrayEquals(new float[] {1, 2, 3}, vec.getValues());
+    }
 }

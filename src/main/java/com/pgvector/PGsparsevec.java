@@ -221,6 +221,33 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
+     * Returns the number of dimensions
+     *
+     * @return the number of dimensions
+     */
+    public int getDimensions() {
+        return dimensions;
+    }
+
+    /**
+     * Returns the non-zero indices
+     *
+     * @return the non-zero indices
+     */
+    public int[] getIndices() {
+        return indices;
+    }
+
+    /**
+     * Returns the non-zero values
+     *
+     * @return the non-zero values
+     */
+    public float[] getValues() {
+        return values;
+    }
+
+    /**
      * Registers the sparsevec type
      *
      * @param conn connection
