@@ -1,4 +1,4 @@
-## 0.1.5 (unreleased)
+## 0.1.5 (2024-06-25)
 
 - Added support for `halfvec`, `bit`, and `sparsevec` types
 - Added `registerTypes` function
