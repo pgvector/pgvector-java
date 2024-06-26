@@ -278,14 +278,4 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     public float[] getValues() {
         return values;
     }
-
-    /**
-     * Registers the sparsevec type
-     *
-     * @param conn connection
-     * @throws SQLException exception
-     */
-    public static void addSparsevecType(Connection conn) throws SQLException {
-        conn.unwrap(PGConnection.class).addDataType("sparsevec", PGsparsevec.class);
-    }
 }

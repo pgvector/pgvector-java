@@ -100,14 +100,4 @@ public class PGhalfvec extends PGobject implements Serializable, Cloneable {
     public float[] toArray() {
         return vec;
     }
-
-    /**
-     * Registers the halfvec type
-     *
-     * @param conn connection
-     * @throws SQLException exception
-     */
-    public static void addHalfvecType(Connection conn) throws SQLException {
-        conn.unwrap(PGConnection.class).addDataType("halfvec", PGhalfvec.class);
-    }
 }

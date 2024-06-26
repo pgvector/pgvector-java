@@ -149,4 +149,17 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     public static void addVectorType(Connection conn) throws SQLException {
         conn.unwrap(PGConnection.class).addDataType("vector", PGvector.class);
     }
+
+    /**
+     * Registers the vector, halfvec, and sparsevec types
+     *
+     * @param conn connection
+     * @throws SQLException exception
+     */
+    public static void registerTypes(Connection conn) throws SQLException {
+        // bit type should be registered separately
+        addVectorType(conn);
+        conn.unwrap(PGConnection.class).addDataType("halfvec", PGhalfvec.class);
+        conn.unwrap(PGConnection.class).addDataType("sparsevec", PGsparsevec.class);
+    }
 }

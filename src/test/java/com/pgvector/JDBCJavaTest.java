@@ -90,7 +90,7 @@ public class JDBCJavaTest {
         setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector");
         setupStmt.executeUpdate("DROP TABLE IF EXISTS jdbc_items");
 
-        PGhalfvec.addHalfvecType(conn);
+        PGvector.registerTypes(conn);
 
         Statement createStmt = conn.createStatement();
         createStmt.executeUpdate("CREATE TABLE jdbc_items (id bigserial PRIMARY KEY, embedding halfvec(3))");
@@ -191,7 +191,7 @@ public class JDBCJavaTest {
         setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector");
         setupStmt.executeUpdate("DROP TABLE IF EXISTS jdbc_items");
 
-        PGsparsevec.addSparsevecType(conn);
+        PGvector.registerTypes(conn);
 
         Statement createStmt = conn.createStatement();
         createStmt.executeUpdate("CREATE TABLE jdbc_items (id bigserial PRIMARY KEY, embedding sparsevec(3))");
