@@ -97,7 +97,8 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     /**
      * Constructor
      *
-     * @param map <Integer, T> map of non-zero elements
+     * @param <T> number
+     * @param map map of non-zero elements
      * @param dimensions number of dimensions
      */
     public <T extends Number> PGsparsevec(Map<Integer, T> map, int dimensions) {
