@@ -138,7 +138,7 @@ public class JDBCJavaTest {
         setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector");
         setupStmt.executeUpdate("DROP TABLE IF EXISTS jdbc_items");
 
-        PGbit.addBitType(conn);
+        PGbit.registerType(conn);
 
         Statement createStmt = conn.createStatement();
         createStmt.executeUpdate("CREATE TABLE jdbc_items (id bigserial PRIMARY KEY, embedding bit(9))");

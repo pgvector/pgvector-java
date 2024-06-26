@@ -149,7 +149,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
      * @param conn connection
      * @throws SQLException exception
      */
-    public static void addBitType(Connection conn) throws SQLException {
+    public static void registerType(Connection conn) throws SQLException {
         conn.unwrap(PGConnection.class).addDataType("bit", PGbit.class);
     }
 }
