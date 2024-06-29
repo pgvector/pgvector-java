@@ -73,7 +73,7 @@ public class OpenAITest {
         for (String v : input) {
             root.withArray("input").add(v);
         }
-        root.put("model", "text-embedding-ada-002");
+        root.put("model", "text-embedding-3-small");
         String json = mapper.writeValueAsString(root);
 
         HttpClient client = HttpClient.newHttpClient();
