@@ -75,7 +75,7 @@ public class CohereTest {
         }
         root.put("model", "embed-english-v3.0");
         root.put("input_type", inputType);
-        root.withArray("embedding_types").add("ubinary");
+        root.withArray("embedding_types").add("binary");
         String json = mapper.writeValueAsString(root);
 
         HttpClient client = HttpClient.newHttpClient();
@@ -88,11 +88,11 @@ public class CohereTest {
         HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 
         List<byte[]> embeddings = new ArrayList<>();
-        for (JsonNode n : mapper.readTree(response.body()).get("embeddings").get("ubinary")) {
+        for (JsonNode n : mapper.readTree(response.body()).get("embeddings").get("binary")) {
             byte[] embedding = new byte[n.size()];
             int i = 0;
             for (JsonNode v : n) {
-                embedding[i++] = (byte) v.asDouble();
+                embedding[i++] = (byte) v.asInt();
             }
             embeddings.add(embedding);
         }
