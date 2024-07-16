@@ -36,6 +36,7 @@ And follow the instructions for your database library:
 Or check out an example:
 
 - [Embeddings](src/test/java/com/pgvector/OpenAITest.java) with OpenAI
+- [Binary embeddings](src/test/java/com/pgvector/CohereTest.java) with Cohere
 
 ## JDBC (Java)
 
