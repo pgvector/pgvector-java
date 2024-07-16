@@ -1,3 +1,7 @@
+## 0.1.6 (unreleased)
+
+- Added `byte[]` constructor to `PGbit`
+
 ## 0.1.5 (2024-06-25)
 
 - Added support for `halfvec`, `bit`, and `sparsevec` types

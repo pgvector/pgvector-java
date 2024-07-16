@@ -42,6 +42,17 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     /**
      * Constructor
      *
+     * @param v byte array
+     */
+    public PGbit(byte[] v) {
+        this();
+        length = v.length * 8;
+        data = v;
+    }
+
+    /**
+     * Constructor
+     *
      * @param s text representation of a bit string
      * @throws SQLException exception
      */
