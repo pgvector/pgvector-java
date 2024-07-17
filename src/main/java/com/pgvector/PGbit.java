@@ -33,7 +33,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     public PGbit(boolean[] v) {
         this();
         length = v.length;
-        data = new byte[Math.addExact(length, 7) / 8];
+        data = new byte[(length + 7) / 8];
         for (int i = 0; i < length; i++) {
             data[i / 8] |= (v[i] ? 1 : 0) << (7 - (i % 8));
         }
@@ -69,7 +69,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
             data = null;
         } else {
             length = s.length();
-            data = new byte[Math.addExact(length, 7) / 8];
+            data = new byte[(length + 7) / 8];
             for (int i = 0; i < length; i++) {
                 data[i / 8] |= (s.charAt(i) != '0' ? 1 : 0) << (7 - (i % 8));
             }
@@ -103,7 +103,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
      */
     public void setByteValue(byte[] value, int offset) throws SQLException {
         length = ByteConverter.int4(value, offset);
-        data = new byte[Math.addExact(length, 7) / 8];
+        data = new byte[(length + 7) / 8];
         for (int i = 0; i < data.length; i++) {
             data[i] = value[offset + 4 + i];
         }
