@@ -6,7 +6,7 @@
     <packaging>jar</packaging>
     <description>pgvector support for Java, Kotlin, Groovy, and Scala</description>
     <url>https://github.com/pgvector/pgvector-java</url>
-    <version>0.1.5</version>
+    <version>0.1.6</version>
     <licenses>
         <license>
             <name>MIT</name>

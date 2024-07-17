@@ -1,4 +1,4 @@
-## 0.1.6 (unreleased)
+## 0.1.6 (2024-07-17)
 
 - Added `byte[]` constructor to `PGbit`
 
