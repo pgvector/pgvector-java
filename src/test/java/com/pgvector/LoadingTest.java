@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 public class LoadingTest {
     @Test
-    void example() throws SQLException, UnsupportedEncodingException {
+    void example() throws SQLException {
         if (System.getenv("TEST_LOADING") == null) {
             return;
         }
@@ -56,7 +56,7 @@ public class LoadingTest {
             }
 
             PGvector embedding = new PGvector(embeddings.get(i));
-            byte[] bytes = (embedding.getValue() + "\n").getBytes("UTF-8");
+            byte[] bytes = (embedding.getValue() + "\n").getBytes();
             copyIn.writeToCopy(bytes, 0, bytes.length);
         }
         copyIn.endCopy();
