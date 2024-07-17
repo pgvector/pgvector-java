@@ -17,6 +17,13 @@ public class PGbitTest {
         assertArrayEquals(new boolean[] {false, true, false, true, false, false, false, false, true}, vec.toArray());
     }
 
+    void testEmptyArrayConstructor() {
+        PGbit vec = new PGbit(new boolean[] {});
+        assertEquals(0, vec.length());
+        assertArrayEquals(new byte[] {}, vec.toByteArray());
+        assertArrayEquals(new boolean[] {}, vec.toArray());
+    }
+
     @Test
     void testStringConstructor() throws SQLException {
         PGbit vec = new PGbit("010100001");
