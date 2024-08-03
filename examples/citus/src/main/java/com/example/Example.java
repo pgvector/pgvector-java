@@ -1,6 +1,5 @@
-package com.pgvector;
+package com.example;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,19 +9,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Random;
 import com.pgvector.PGvector;
-import org.postgresql.PGConnection;
 import org.postgresql.copy.CopyIn;
 import org.postgresql.copy.CopyManager;
 import org.postgresql.core.BaseConnection;
-import org.junit.jupiter.api.Test;
 
-public class CitusTest {
-    @Test
-    void example() throws SQLException {
-        if (System.getenv("TEST_CITUS") == null) {
-            return;
-        }
-
+public class Example {
+    public static void main(String[] args) throws SQLException {
         // generate data
         int rows = 1000000;
         int dimensions = 128;

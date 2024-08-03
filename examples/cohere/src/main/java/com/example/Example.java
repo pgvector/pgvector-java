@@ -1,4 +1,4 @@
-package com.pgvector;
+package com.example;
 
 import java.io.IOException;
 import java.net.URI;
@@ -18,16 +18,15 @@ import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.pgvector.PGbit;
 import com.pgvector.PGvector;
-import org.postgresql.PGConnection;
-import org.junit.jupiter.api.Test;
 
-public class OpenAITest {
-    @Test
-    void example() throws IOException, InterruptedException, SQLException {
-        String apiKey = System.getenv("OPENAI_API_KEY");
+public class Example {
+    public static void main(String[] args) throws IOException, InterruptedException, SQLException {
+        String apiKey = System.getenv("CO_API_KEY");
         if (apiKey == null) {
-            return;
+            System.out.println("Set CO_API_KEY");
+            System.exit(1);
         }
 
         Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_example");
@@ -39,26 +38,25 @@ public class OpenAITest {
         PGvector.addVectorType(conn);
 
         Statement createStmt = conn.createStatement();
-        createStmt.executeUpdate("CREATE TABLE documents (id bigserial PRIMARY KEY, content text, embedding vector(1536))");
+        createStmt.executeUpdate("CREATE TABLE documents (id bigserial PRIMARY KEY, content text, embedding bit(1024))");
 
         String[] input = {
             "The dog is barking",
             "The cat is purring",
             "The bear is growling"
         };
-        List<float[]> embeddings = fetchEmbeddings(input, apiKey);
-
+        List<byte[]> embeddings = fetchEmbeddings(input, "search_document", apiKey);
         for (int i = 0; i < input.length; i++) {
             PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO documents (content, embedding) VALUES (?, ?)");
             insertStmt.setString(1, input[i]);
-            insertStmt.setObject(2, new PGvector(embeddings.get(i)));
+            insertStmt.setObject(2, new PGbit(embeddings.get(i)));
             insertStmt.executeUpdate();
         }
 
-        long documentId = 2;
-        PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM documents WHERE id != ? ORDER BY embedding <=> (SELECT embedding FROM documents WHERE id = ?) LIMIT 5");
-        neighborStmt.setObject(1, documentId);
-        neighborStmt.setObject(2, documentId);
+        String query = "forest";
+        byte[] queryEmbedding = fetchEmbeddings(new String[] {query}, "search_query", apiKey).get(0);
+        PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM documents ORDER BY embedding <~> ? LIMIT 5");
+        neighborStmt.setObject(1, new PGbit(queryEmbedding));
         ResultSet rs = neighborStmt.executeQuery();
         while (rs.next()) {
             System.out.println(rs.getString("content"));
@@ -67,30 +65,33 @@ public class OpenAITest {
         conn.close();
     }
 
-    private List<float[]> fetchEmbeddings(String[] input, String apiKey) throws IOException, InterruptedException {
+    // https://docs.cohere.com/reference/embed
+    private static List<byte[]> fetchEmbeddings(String[] texts, String inputType, String apiKey) throws IOException, InterruptedException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode root = mapper.createObjectNode();
-        for (String v : input) {
-            root.withArray("input").add(v);
+        for (String v : texts) {
+            root.withArray("texts").add(v);
         }
-        root.put("model", "text-embedding-3-small");
+        root.put("model", "embed-english-v3.0");
+        root.put("input_type", inputType);
+        root.withArray("embedding_types").add("binary");
         String json = mapper.writeValueAsString(root);
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create("https://api.openai.com/v1/embeddings"))
+            .uri(URI.create("https://api.cohere.com/v1/embed"))
             .header("Authorization", "Bearer " + apiKey)
             .header("Content-Type", "application/json")
             .POST(BodyPublishers.ofString(json))
             .build();
         HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 
-        List<float[]> embeddings = new ArrayList<>();
-        for (JsonNode n : mapper.readTree(response.body()).get("data")) {
-            float[] embedding = new float[n.get("embedding").size()];
+        List<byte[]> embeddings = new ArrayList<>();
+        for (JsonNode n : mapper.readTree(response.body()).get("embeddings").get("binary")) {
+            byte[] embedding = new byte[n.size()];
             int i = 0;
-            for (JsonNode v : n.get("embedding")) {
-                embedding[i++] = (float) v.asDouble();
+            for (JsonNode v : n) {
+                embedding[i++] = (byte) v.asInt();
             }
             embeddings.add(embedding);
         }

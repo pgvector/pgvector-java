@@ -35,10 +35,10 @@ And follow the instructions for your database library:
 
 Or check out some examples:
 
-- [Embeddings](src/test/java/com/pgvector/OpenAITest.java) with OpenAI
-- [Binary embeddings](src/test/java/com/pgvector/CohereTest.java) with Cohere
-- [Horizontal scaling](src/test/java/com/pgvector/CitusTest.java) with Citus
-- [Bulk loading](src/test/java/com/pgvector/LoadingTest.java) with `COPY`
+- [Embeddings](examples/openai/src/main/java/com/example/Example.java) with OpenAI
+- [Binary embeddings](examples/cohere/src/main/java/com/example/Example.java) with Cohere
+- [Horizontal scaling](examples/citus/src/main/java/com/example/Example.java) with Citus
+- [Bulk loading](examples/loading/src/main/java/com/example/Example.java) with `COPY`
 
 ## JDBC (Java)
 
@@ -518,4 +518,12 @@ git clone https://github.com/pgvector/pgvector-java.git
 cd pgvector-java
 createdb pgvector_java_test
 mvn test
+```
+
+To run an example:
+
+```sh
+cd examples/loading
+mvn package
+java -jar target/example.jar
 ```
