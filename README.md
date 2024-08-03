@@ -37,6 +37,7 @@ Or check out some examples:
 
 - [Embeddings](src/test/java/com/pgvector/OpenAITest.java) with OpenAI
 - [Binary embeddings](src/test/java/com/pgvector/CohereTest.java) with Cohere
+- [Horizontal scaling](src/test/java/com/pgvector/CitusTest.java) with Citus
 - [Bulk loading](src/test/java/com/pgvector/LoadingTest.java) with `COPY`
 
 ## JDBC (Java)
