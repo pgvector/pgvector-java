@@ -526,5 +526,5 @@ To run an example:
 cd examples/loading
 createdb pgvector_example
 mvn package
-java -jar target/example.jar
+java -jar target/example-jar-with-dependencies.jar
 ```

@@ -5,8 +5,7 @@
     <artifactId>example</artifactId>
     <version>1</version>
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.release>8</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
@@ -36,7 +35,6 @@
                         </manifest>
                     </archive>
                     <finalName>example</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>
                 <execution>
