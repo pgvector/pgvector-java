@@ -524,6 +524,7 @@ To run an example:
 
 ```sh
 cd examples/loading
+createdb pgvector_example
 mvn package
 java -jar target/example.jar
 ```
