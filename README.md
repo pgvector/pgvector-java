@@ -38,6 +38,7 @@ Or check out some examples:
 - [Embeddings](examples/openai/src/main/java/com/example/Example.java) with OpenAI
 - [Binary embeddings](examples/cohere/src/main/java/com/example/Example.java) with Cohere
 - [Sentence embeddings](examples/djl/src/main/java/com/example/Example.java) with Deep Java Library
+- [Hybrid search](examples/hybrid/src/main/java/com/example/Example.java) with Deep Java Library (Reciprocal Rank Fusion)
 - [Horizontal scaling](examples/citus/src/main/java/com/example/Example.java) with Citus
 - [Bulk loading](examples/loading/src/main/java/com/example/Example.java) with `COPY`
 
