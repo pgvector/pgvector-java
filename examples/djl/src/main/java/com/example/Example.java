@@ -1,0 +1,79 @@
+package com.example;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import ai.djl.ModelException;
+import ai.djl.huggingface.translator.TextEmbeddingTranslatorFactory;
+import ai.djl.inference.Predictor;
+import ai.djl.repository.zoo.Criteria;
+import ai.djl.repository.zoo.ZooModel;
+import ai.djl.translate.TranslateException;
+import com.pgvector.PGvector;
+
+public class Example {
+    public static void main(String[] args) throws IOException, ModelException, SQLException, TranslateException {
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/pgvector_example");
+
+        Statement setupStmt = conn.createStatement();
+        setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector");
+        setupStmt.executeUpdate("DROP TABLE IF EXISTS documents");
+
+        PGvector.addVectorType(conn);
+
+        Statement createStmt = conn.createStatement();
+        createStmt.executeUpdate("CREATE TABLE documents (id bigserial PRIMARY KEY, content text, embedding vector(384))");
+
+        ZooModel<String, float[]> model = loadModel("sentence-transformers/all-MiniLM-L6-v2");
+
+        String[] input = {
+            "The dog is barking",
+            "The cat is purring",
+            "The bear is growling"
+        };
+        List<float[]> embeddings = generateEmbeddings(model, input);
+
+        for (int i = 0; i < input.length; i++) {
+            PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO documents (content, embedding) VALUES (?, ?)");
+            insertStmt.setString(1, input[i]);
+            insertStmt.setObject(2, new PGvector(embeddings.get(i)));
+            insertStmt.executeUpdate();
+        }
+
+        long documentId = 2;
+        PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM documents WHERE id != ? ORDER BY embedding <=> (SELECT embedding FROM documents WHERE id = ?) LIMIT 5");
+        neighborStmt.setLong(1, documentId);
+        neighborStmt.setLong(2, documentId);
+        ResultSet rs = neighborStmt.executeQuery();
+        while (rs.next()) {
+            System.out.println(rs.getString("content"));
+        }
+
+        conn.close();
+    }
+
+    private static ZooModel<String, float[]> loadModel(String id) throws IOException, ModelException {
+        return Criteria.builder()
+            .setTypes(String.class, float[].class)
+            .optModelUrls("djl://ai.djl.huggingface.pytorch/" + id)
+            .optEngine("PyTorch")
+            .optTranslatorFactory(new TextEmbeddingTranslatorFactory())
+            .build()
+            .loadModel();
+    }
+
+    private static List<float[]> generateEmbeddings(ZooModel<String, float[]> model, String[] input) throws TranslateException {
+        Predictor<String, float[]> predictor = model.newPredictor();
+        List<float[]> embeddings = new ArrayList<>(input.length);
+        for (String text : input) {
+            embeddings.add(predictor.predict(text));
+        }
+        return embeddings;
+    }
+}
