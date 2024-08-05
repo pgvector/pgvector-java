@@ -19,7 +19,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.pgvector.PGbit;
-import com.pgvector.PGvector;
 
 public class Example {
     public static void main(String[] args) throws IOException, InterruptedException, SQLException {
@@ -34,8 +33,6 @@ public class Example {
         Statement setupStmt = conn.createStatement();
         setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector");
         setupStmt.executeUpdate("DROP TABLE IF EXISTS documents");
-
-        PGvector.addVectorType(conn);
 
         Statement createStmt = conn.createStatement();
         createStmt.executeUpdate("CREATE TABLE documents (id bigserial PRIMARY KEY, content text, embedding bit(1024))");
