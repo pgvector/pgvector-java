@@ -1,3 +1,10 @@
+// good resources
+// https://opensearch.org/blog/improving-document-retrieval-with-sparse-semantic-encoders/
+// https://huggingface.co/opensearch-project/opensearch-neural-sparse-encoding-v1
+//
+// run with
+// text-embeddings-router --model-id opensearch-project/opensearch-neural-sparse-encoding-v1 --pooling splade
+
 package com.example;
 
 import java.io.IOException;
