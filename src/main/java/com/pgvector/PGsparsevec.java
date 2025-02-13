@@ -58,7 +58,10 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Constructor
+     * Constructor for creating a sparse vector from a List.
+     * <p>
+     * Expects the list to represent the vector with 0-based indexing, as is standard in programming.
+     * Each element in the list corresponds to a dimension of the vector (its index in the list).
      *
      * @param <T> number
      * @param v list of numbers
@@ -95,7 +98,9 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Constructor
+     * Constructor for creating a sparse vector from a Map.
+     * <p>
+     * Expects the map keys (indices) to be 0-based, as typically used in programming.
      *
      * @param <T> number
      * @param map map of non-zero elements
@@ -126,7 +131,11 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Constructor
+     * Constructor for creating a sparse vector from its text representation.
+     * <p>
+     * The text representation uses 1-based indexing as per PostgreSQL SQL literal format.
+     * For example: <code>'{1:1,3:2,5:3}/5'</code> represents a sparse vector with 5 dimensions.
+     * Internally, the indices are converted to 0-based indexing.
      *
      * @param s text representation of a sparse vector
      * @throws SQLException exception
@@ -137,7 +146,15 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Sets the value from a text representation of a sparse vector
+     * Sets the sparse vector value from its text representation.
+     * <p>
+     * The text representation uses 1-based indexing as per PostgreSQL SQL literal format.
+     * For example: <code>'{1:1,3:2,5:3}/5'</code> represents a sparse vector with 5 dimensions.
+     * Internally, the indices are converted to 0-based indexing.
+     * <p>
+     * If the provided string is null, the vector's indices are set to null.
+     * 
+     * @param s the text representation of the sparse vector using 1-based indices
      */
     public void setValue(String s) throws SQLException {
         if (s == null) {
