@@ -37,7 +37,7 @@ public class Example {
             "The cat is purring",
             "The bear is growling"
         };
-        List<float[]> embeddings = generateEmbeddings(model, input);
+        List<float[]> embeddings = embed(model, input);
 
         for (int i = 0; i < input.length; i++) {
             PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO documents (content, embedding) VALUES (?, ?)");
@@ -47,7 +47,7 @@ public class Example {
         }
 
         String query = "growling bear";
-        float[] queryEmbedding = generateEmbeddings(model, new String[] {query}).get(0);
+        float[] queryEmbedding = embed(model, new String[] {query}).get(0);
         double k = 60;
 
         PreparedStatement queryStmt = conn.prepareStatement(HYBRID_SQL);
@@ -74,7 +74,7 @@ public class Example {
             .loadModel();
     }
 
-    private static List<float[]> generateEmbeddings(ZooModel<String, float[]> model, String[] input) throws TranslateException {
+    private static List<float[]> embed(ZooModel<String, float[]> model, String[] input) throws TranslateException {
         Predictor<String, float[]> predictor = model.newPredictor();
         List<float[]> embeddings = new ArrayList<>(input.length);
         for (String text : input) {

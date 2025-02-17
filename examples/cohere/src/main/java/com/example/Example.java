@@ -42,7 +42,8 @@ public class Example {
             "The cat is purring",
             "The bear is growling"
         };
-        List<byte[]> embeddings = fetchEmbeddings(input, "search_document", apiKey);
+        List<byte[]> embeddings = embed(input, "search_document", apiKey);
+
         for (int i = 0; i < input.length; i++) {
             PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO documents (content, embedding) VALUES (?, ?)");
             insertStmt.setString(1, input[i]);
@@ -51,7 +52,7 @@ public class Example {
         }
 
         String query = "forest";
-        byte[] queryEmbedding = fetchEmbeddings(new String[] {query}, "search_query", apiKey).get(0);
+        byte[] queryEmbedding = embed(new String[] {query}, "search_query", apiKey).get(0);
         PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM documents ORDER BY embedding <~> ? LIMIT 5");
         neighborStmt.setObject(1, new PGbit(queryEmbedding));
         ResultSet rs = neighborStmt.executeQuery();
@@ -63,7 +64,7 @@ public class Example {
     }
 
     // https://docs.cohere.com/reference/embed
-    private static List<byte[]> fetchEmbeddings(String[] texts, String inputType, String apiKey) throws IOException, InterruptedException {
+    private static List<byte[]> embed(String[] texts, String inputType, String apiKey) throws IOException, InterruptedException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode root = mapper.createObjectNode();
         for (String v : texts) {

@@ -48,7 +48,7 @@ public class Example {
             "The cat is purring",
             "The bear is growling"
         };
-        List<Map<Integer, Float>> embeddings = fetchEmbeddings(input);
+        List<Map<Integer, Float>> embeddings = embed(input);
 
         for (int i = 0; i < input.length; i++) {
             PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO documents (content, embedding) VALUES (?, ?)");
@@ -58,7 +58,7 @@ public class Example {
         }
 
         String query = "forest";
-        Map<Integer, Float> queryEmbedding = fetchEmbeddings(new String[] { query }).get(0);
+        Map<Integer, Float> queryEmbedding = embed(new String[] { query }).get(0);
         PreparedStatement neighborStmt = conn.prepareStatement("SELECT content FROM documents ORDER BY embedding <#> ? LIMIT 5");
         neighborStmt.setObject(1, new PGsparsevec(queryEmbedding, 30522));
         ResultSet rs = neighborStmt.executeQuery();
@@ -69,7 +69,7 @@ public class Example {
         conn.close();
     }
 
-    private static List<Map<Integer, Float>> fetchEmbeddings(String[] inputs) throws IOException, InterruptedException {
+    private static List<Map<Integer, Float>> embed(String[] inputs) throws IOException, InterruptedException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode root = mapper.createObjectNode();
         for (String v : inputs) {

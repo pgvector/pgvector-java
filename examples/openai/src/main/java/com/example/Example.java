@@ -44,7 +44,7 @@ public class Example {
             "The cat is purring",
             "The bear is growling"
         };
-        List<float[]> embeddings = fetchEmbeddings(input, apiKey);
+        List<float[]> embeddings = embed(input, apiKey);
 
         for (int i = 0; i < input.length; i++) {
             PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO documents (content, embedding) VALUES (?, ?)");
@@ -53,10 +53,10 @@ public class Example {
             insertStmt.executeUpdate();
         }
 
-        long documentId = 2;
-        PreparedStatement neighborStmt = conn.prepareStatement("SELECT * FROM documents WHERE id != ? ORDER BY embedding <=> (SELECT embedding FROM documents WHERE id = ?) LIMIT 5");
-        neighborStmt.setObject(1, documentId);
-        neighborStmt.setObject(2, documentId);
+        String query = "forest";
+        float[] queryEmbedding = embed(new String[] {query}, apiKey).get(0);
+        PreparedStatement neighborStmt = conn.prepareStatement("SELECT content FROM documents ORDER BY embedding <=> ? LIMIT 5");
+        neighborStmt.setObject(1, new PGvector(queryEmbedding));
         ResultSet rs = neighborStmt.executeQuery();
         while (rs.next()) {
             System.out.println(rs.getString("content"));
@@ -65,7 +65,7 @@ public class Example {
         conn.close();
     }
 
-    private static List<float[]> fetchEmbeddings(String[] input, String apiKey) throws IOException, InterruptedException {
+    private static List<float[]> embed(String[] input, String apiKey) throws IOException, InterruptedException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode root = mapper.createObjectNode();
         for (String v : input) {
