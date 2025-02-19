@@ -502,6 +502,132 @@ Use `vector_ip_ops` for inner product and `vector_cosine_ops` for cosine distanc
 
 See a [full example](src/test/scala/com/pgvector/SlickTest.scala)
 
+## Reference
+
+### Vectors
+
+Create a vector from an array
+
+```java
+PGvector vec = new PGvector(new float[] {1, 2, 3});
+```
+
+Or a `List<T>`
+
+```java
+List<Float> list = List.of(Float.valueOf(1), Float.valueOf(2), Float.valueOf(3));
+PGvector vec = new PGvector(list);
+```
+
+Get an array
+
+```java
+float[] arr = vec.toArray();
+```
+
+### Half Vectors
+
+Create a half vector from an array
+
+```java
+PGhalfvec vec = new PGhalfvec(new float[] {1, 2, 3});
+```
+
+Or a `List<T>`
+
+```java
+List<Float> list = List.of(Float.valueOf(1), Float.valueOf(2), Float.valueOf(3));
+PGhalfvec vec = new PGhalfvec(list);
+```
+
+Get an array
+
+```java
+float[] arr = vec.toArray();
+```
+
+### Binary Vectors
+
+Create a binary vector from a byte array
+
+```java
+PGbit vec = new PGbit(new byte[] {(byte) 0b00000000, (byte) 0b11111111});
+```
+
+Or a boolean array
+
+```java
+PGbit vec = new PGbit(new boolean[] {true, false, true});
+```
+
+Or a string
+
+```java
+PGbit vec = new PGbit("101");
+```
+
+Get the length (number of bits)
+
+```java
+int length = vec.length();
+```
+
+Get a byte array
+
+```java
+byte[] bytes = vec.toByteArray();
+```
+
+Or a boolean array
+
+```java
+boolean[] bits = vec.toArray();
+```
+
+### Sparse Vectors
+
+Create a sparse vector from an array
+
+```java
+PGsparsevec vec = new PGsparsevec(new float[] {1, 0, 2, 0, 3, 0});
+```
+
+Or a map of non-zero elements
+
+```java
+Map<Integer, Float> map = new HashMap<Integer, Float>();
+map.put(Integer.valueOf(0), Float.valueOf(1));
+map.put(Integer.valueOf(2), Float.valueOf(2));
+map.put(Integer.valueOf(4), Float.valueOf(3));
+PGsparsevec vec = new PGsparsevec(map, 6);
+```
+
+Note: Indices start at 0
+
+Get the number of dimensions
+
+```java
+int dim = vec.getDimensions();
+```
+
+Get the indices of non-zero elements
+
+```java
+int[] indices = vec.getIndices();
+```
+
+Get the values of non-zero elements
+
+```java
+float[] values = vec.getValues();
+```
+
+Get an array
+
+```java
+float[] arr = vec.toArray();
+```
+
 ## History
 
 View the [changelog](https://github.com/pgvector/pgvector-java/blob/master/CHANGELOG.md)
