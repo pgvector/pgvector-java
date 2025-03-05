@@ -20,14 +20,14 @@ public class PGhalfvec extends PGobject implements Serializable, Cloneable {
     private float[] vec;
 
     /**
-     * Constructor
+     * @hidden
      */
     public PGhalfvec() {
         type = "halfvec";
     }
 
     /**
-     * Constructor
+     * Creates a half vector from an array
      *
      * @param v float array
      */
@@ -37,7 +37,7 @@ public class PGhalfvec extends PGobject implements Serializable, Cloneable {
     }
 
     /**
-     * Constructor
+     * Creates a half vector from a list
      *
      * @param <T> number
      * @param v list of numbers
@@ -56,7 +56,7 @@ public class PGhalfvec extends PGobject implements Serializable, Cloneable {
     }
 
     /**
-     * Constructor
+     * Creates a half vector from a text representation
      *
      * @param s text representation of a half vector
      * @throws SQLException exception

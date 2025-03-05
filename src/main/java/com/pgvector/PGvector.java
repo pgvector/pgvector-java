@@ -18,14 +18,14 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     private float[] vec;
 
     /**
-     * Constructor
+     * @hidden
      */
     public PGvector() {
         type = "vector";
     }
 
     /**
-     * Constructor
+     * Creates a vector from an array
      *
      * @param v float array
      */
@@ -35,7 +35,7 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     }
 
     /**
-     * Constructor
+     * Creates a vector from a list
      *
      * @param <T> number
      * @param v list of numbers
@@ -54,7 +54,7 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     }
 
     /**
-     * Constructor
+     * Creates a vector from a text representation
      *
      * @param s text representation of a vector
      * @throws SQLException exception

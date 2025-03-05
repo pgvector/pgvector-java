@@ -19,14 +19,14 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     private byte[] data;
 
     /**
-     * Constructor
+     * @hidden
      */
     public PGbit() {
         type = "bit";
     }
 
     /**
-     * Constructor
+     * Creates a bit string from a boolean array
      *
      * @param v boolean array
      */
@@ -40,7 +40,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
-     * Constructor
+     * Creates a bit string from a byte array
      *
      * @param v byte array
      */
@@ -51,7 +51,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
-     * Constructor
+     * Creates a bit string from a text representation
      *
      * @param s text representation of a bit string
      * @throws SQLException exception

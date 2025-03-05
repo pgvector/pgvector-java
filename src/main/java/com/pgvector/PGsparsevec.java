@@ -22,14 +22,14 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     private float[] values;
 
     /**
-     * Constructor
+     * @hidden
      */
     public PGsparsevec() {
         type = "sparsevec";
     }
 
     /**
-     * Constructor
+     * Creates a sparse vector from an array
      *
      * @param v float array
      */
@@ -58,7 +58,7 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Constructor
+     * Creates a sparse vector from a list
      *
      * @param <T> number
      * @param v list of numbers
@@ -95,7 +95,9 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Constructor
+     * Creates a sparse vector from a map of non-zero elements
+     * <p>
+     * Indices start at 0
      *
      * @param <T> number
      * @param map map of non-zero elements
@@ -126,7 +128,7 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Constructor
+     * Creates a sparse vector from a text representation
      *
      * @param s text representation of a sparse vector
      * @throws SQLException exception
