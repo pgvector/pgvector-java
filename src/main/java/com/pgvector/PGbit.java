@@ -12,7 +12,7 @@ import org.postgresql.util.PGBinaryObject;
 import org.postgresql.util.PGobject;
 
 /**
- * PGbit class
+ * A bit string.
  */
 public class PGbit extends PGobject implements PGBinaryObject, Serializable, Cloneable {
     private int length;
@@ -26,7 +26,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
-     * Creates a bit string from a boolean array
+     * Creates a bit string from a boolean array.
      *
      * @param v boolean array
      */
@@ -40,7 +40,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
-     * Creates a bit string from a byte array
+     * Creates a bit string from a byte array.
      *
      * @param v byte array
      */
@@ -51,7 +51,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
-     * Creates a bit string from a text representation
+     * Creates a bit string from a text representation.
      *
      * @param s text representation of a bit string
      * @throws SQLException exception
@@ -62,7 +62,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
-     * Sets the value from a text representation of a bit string
+     * Sets the value from a text representation of a bit string.
      */
     public void setValue(String s) throws SQLException {
         if (s == null) {
@@ -77,7 +77,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
-     * Returns the text representation of a bit string
+     * Returns the text representation of a bit string.
      */
     public String getValue() {
         if (data == null) {
@@ -92,14 +92,14 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
-     * Returns the number of bytes for the binary representation
+     * Returns the number of bytes for the binary representation.
      */
     public int lengthInBytes() {
         return data == null ? 0 : 4 + data.length;
     }
 
     /**
-     * Sets the value from a binary representation of a bit string
+     * Sets the value from a binary representation of a bit string.
      */
     public void setByteValue(byte[] value, int offset) throws SQLException {
         length = ByteConverter.int4(value, offset);
@@ -110,7 +110,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
-     * Writes the binary representation of a bit string
+     * Writes the binary representation of a bit string.
      */
     public void toBytes(byte[] bytes, int offset) {
         if (data == null) {
@@ -124,7 +124,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
-     * Returns the length
+     * Returns the length.
      *
      * @return an array
      */
@@ -133,7 +133,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
-     * Returns a byte array
+     * Returns a byte array.
      *
      * @return an array
      */
@@ -142,7 +142,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
-     * Returns an array
+     * Returns an array.
      *
      * @return an array
      */
@@ -155,7 +155,7 @@ public class PGbit extends PGobject implements PGBinaryObject, Serializable, Clo
     }
 
     /**
-     * Registers the bit type
+     * Registers the bit type.
      *
      * @param conn connection
      * @throws SQLException exception

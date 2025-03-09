@@ -10,12 +10,12 @@ import org.postgresql.PGConnection;
 import org.postgresql.util.PGobject;
 
 /**
- * PGhalfvec class
+ * A half vector.
  */
 public class PGhalfvec extends PGobject implements Serializable, Cloneable {
     /*
      * Use float and text format for now since Float.float16ToFloat/floatToFloat16
-     * are not available until Java 20
+     * are not available until Java 20.
      */
     private float[] vec;
 
@@ -27,7 +27,7 @@ public class PGhalfvec extends PGobject implements Serializable, Cloneable {
     }
 
     /**
-     * Creates a half vector from an array
+     * Creates a half vector from an array.
      *
      * @param v float array
      */
@@ -37,7 +37,7 @@ public class PGhalfvec extends PGobject implements Serializable, Cloneable {
     }
 
     /**
-     * Creates a half vector from a list
+     * Creates a half vector from a list.
      *
      * @param <T> number
      * @param v list of numbers
@@ -56,7 +56,7 @@ public class PGhalfvec extends PGobject implements Serializable, Cloneable {
     }
 
     /**
-     * Creates a half vector from a text representation
+     * Creates a half vector from a text representation.
      *
      * @param s text representation of a half vector
      * @throws SQLException exception
@@ -67,7 +67,7 @@ public class PGhalfvec extends PGobject implements Serializable, Cloneable {
     }
 
     /**
-     * Sets the value from a text representation of a half vector
+     * Sets the value from a text representation of a half vector.
      */
     public void setValue(String s) throws SQLException {
         if (s == null) {
@@ -82,7 +82,7 @@ public class PGhalfvec extends PGobject implements Serializable, Cloneable {
     }
 
     /**
-     * Returns the text representation of a half vector
+     * Returns the text representation of a half vector.
      */
     public String getValue() {
         if (vec == null) {
@@ -93,7 +93,7 @@ public class PGhalfvec extends PGobject implements Serializable, Cloneable {
     }
 
     /**
-     * Returns an array
+     * Returns an array.
      *
      * @return an array
      */

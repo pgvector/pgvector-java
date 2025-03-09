@@ -14,7 +14,7 @@ import org.postgresql.util.PGBinaryObject;
 import org.postgresql.util.PGobject;
 
 /**
- * PGsparsevec class
+ * A sparse vector.
  */
 public class PGsparsevec extends PGobject implements PGBinaryObject, Serializable, Cloneable {
     private int dimensions;
@@ -29,7 +29,7 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Creates a sparse vector from an array
+     * Creates a sparse vector from an array.
      *
      * @param v float array
      */
@@ -58,7 +58,7 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Creates a sparse vector from a list
+     * Creates a sparse vector from a list.
      *
      * @param <T> number
      * @param v list of numbers
@@ -95,9 +95,9 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Creates a sparse vector from a map of non-zero elements
+     * Creates a sparse vector from a map of non-zero elements.
      * <p>
-     * Indices start at 0
+     * Indices start at 0.
      *
      * @param <T> number
      * @param map map of non-zero elements
@@ -128,7 +128,7 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Creates a sparse vector from a text representation
+     * Creates a sparse vector from a text representation.
      *
      * @param s text representation of a sparse vector
      * @throws SQLException exception
@@ -139,7 +139,7 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Sets the value from a text representation of a sparse vector
+     * Sets the value from a text representation of a sparse vector.
      */
     public void setValue(String s) throws SQLException {
         if (s == null) {
@@ -162,7 +162,7 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Returns the text representation of a sparse vector
+     * Returns the text representation of a sparse vector.
      */
     public String getValue() {
         if (indices == null) {
@@ -188,14 +188,14 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Returns the number of bytes for the binary representation
+     * Returns the number of bytes for the binary representation.
      */
     public int lengthInBytes() {
         return indices == null ? 0 : 12 + indices.length * 4 + values.length * 4;
     }
 
     /**
-     * Sets the value from a binary representation of a sparse vector
+     * Sets the value from a binary representation of a sparse vector.
      */
     public void setByteValue(byte[] value, int offset) throws SQLException {
         dimensions = ByteConverter.int4(value, offset);
@@ -218,7 +218,7 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Writes the binary representation of a sparse vector
+     * Writes the binary representation of a sparse vector.
      */
     public void toBytes(byte[] bytes, int offset) {
         if (indices == null) {
@@ -239,7 +239,7 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Returns an array
+     * Returns an array.
      *
      * @return an array
      */
@@ -256,7 +256,7 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Returns the number of dimensions
+     * Returns the number of dimensions.
      *
      * @return the number of dimensions
      */
@@ -265,7 +265,7 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Returns the non-zero indices
+     * Returns the non-zero indices.
      *
      * @return the non-zero indices
      */
@@ -274,7 +274,7 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
     }
 
     /**
-     * Returns the non-zero values
+     * Returns the non-zero values.
      *
      * @return the non-zero values
      */

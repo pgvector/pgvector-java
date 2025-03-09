@@ -12,7 +12,7 @@ import org.postgresql.util.PGBinaryObject;
 import org.postgresql.util.PGobject;
 
 /**
- * PGvector class
+ * A vector.
  */
 public class PGvector extends PGobject implements PGBinaryObject, Serializable, Cloneable {
     private float[] vec;
@@ -25,7 +25,7 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     }
 
     /**
-     * Creates a vector from an array
+     * Creates a vector from an array.
      *
      * @param v float array
      */
@@ -35,7 +35,7 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     }
 
     /**
-     * Creates a vector from a list
+     * Creates a vector from a list.
      *
      * @param <T> number
      * @param v list of numbers
@@ -54,7 +54,7 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     }
 
     /**
-     * Creates a vector from a text representation
+     * Creates a vector from a text representation.
      *
      * @param s text representation of a vector
      * @throws SQLException exception
@@ -65,7 +65,7 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     }
 
     /**
-     * Sets the value from a text representation of a vector
+     * Sets the value from a text representation of a vector.
      */
     public void setValue(String s) throws SQLException {
         if (s == null) {
@@ -80,7 +80,7 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     }
 
     /**
-     * Returns the text representation of a vector
+     * Returns the text representation of a vector.
      */
     public String getValue() {
         if (vec == null) {
@@ -91,14 +91,14 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     }
 
     /**
-     * Returns the number of bytes for the binary representation
+     * Returns the number of bytes for the binary representation.
      */
     public int lengthInBytes() {
         return vec == null ? 0 : 4 + vec.length * 4;
     }
 
     /**
-     * Sets the value from a binary representation of a vector
+     * Sets the value from a binary representation of a vector.
      */
     public void setByteValue(byte[] value, int offset) throws SQLException {
         int dim = ByteConverter.int2(value, offset);
@@ -115,7 +115,7 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     }
 
     /**
-     * Writes the binary representation of a vector
+     * Writes the binary representation of a vector.
      */
     public void toBytes(byte[] bytes, int offset) {
         if (vec == null) {
@@ -132,7 +132,7 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     }
 
     /**
-     * Returns an array
+     * Returns an array.
      *
      * @return an array
      */
@@ -141,7 +141,7 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     }
 
     /**
-     * Registers the vector type
+     * Registers the vector type.
      *
      * @param conn connection
      * @throws SQLException exception
@@ -151,7 +151,7 @@ public class PGvector extends PGobject implements PGBinaryObject, Serializable, 
     }
 
     /**
-     * Registers the vector, halfvec, and sparsevec types
+     * Registers the vector, halfvec, and sparsevec types.
      *
      * @param conn connection
      * @throws SQLException exception
