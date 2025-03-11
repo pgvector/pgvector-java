@@ -41,6 +41,7 @@ Or check out some examples:
 - [Hybrid search](examples/hybrid/src/main/java/com/example/Example.java) with Deep Java Library (Reciprocal Rank Fusion)
 - [Sparse search](examples/sparse/src/main/java/com/example/Example.java) with Text Embeddings Inference
 - [Extended-connectivity fingerprints](examples/cdk/src/main/java/com/example/Example.java) with the Chemistry Development Kit
+- [Recommendations](examples/disco/src/main/java/com/example/Example.java) with Disco
 - [Horizontal scaling](examples/citus/src/main/java/com/example/Example.java) with Citus
 - [Bulk loading](examples/loading/src/main/java/com/example/Example.java) with `COPY`
 
