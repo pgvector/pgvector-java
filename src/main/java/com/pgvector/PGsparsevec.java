@@ -152,8 +152,7 @@ public class PGsparsevec extends PGobject implements PGBinaryObject, Serializabl
             indices = new int[elements.length];
             values = new float[elements.length];
 
-            for (int i = 0; i < elements.length; i++)
-            {
+            for (int i = 0; i < elements.length; i++) {
                 String[] ep = elements[i].split(":", 2);
                 indices[i] = Integer.parseInt(ep[0]) - 1;
                 values[i] = Float.parseFloat(ep[1]);
