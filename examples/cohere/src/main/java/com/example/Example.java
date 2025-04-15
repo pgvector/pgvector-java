@@ -35,7 +35,7 @@ public class Example {
         setupStmt.executeUpdate("DROP TABLE IF EXISTS documents");
 
         Statement createStmt = conn.createStatement();
-        createStmt.executeUpdate("CREATE TABLE documents (id bigserial PRIMARY KEY, content text, embedding bit(1024))");
+        createStmt.executeUpdate("CREATE TABLE documents (id bigserial PRIMARY KEY, content text, embedding bit(1536))");
 
         String[] input = {
             "The dog is barking",
@@ -70,14 +70,14 @@ public class Example {
         for (String v : texts) {
             root.withArray("texts").add(v);
         }
-        root.put("model", "embed-english-v3.0");
+        root.put("model", "embed-v4.0");
         root.put("input_type", inputType);
         root.withArray("embedding_types").add("binary");
         String json = mapper.writeValueAsString(root);
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create("https://api.cohere.com/v1/embed"))
+            .uri(URI.create("https://api.cohere.com/v2/embed"))
             .header("Authorization", "Bearer " + apiKey)
             .header("Content-Type", "application/json")
             .POST(BodyPublishers.ofString(json))
