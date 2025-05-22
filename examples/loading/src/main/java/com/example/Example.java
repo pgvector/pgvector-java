@@ -9,6 +9,7 @@ import com.pgvector.PGvector;
 import org.postgresql.copy.CopyIn;
 import org.postgresql.copy.CopyManager;
 import org.postgresql.core.BaseConnection;
+import org.postgresql.util.ByteConverter;
 
 public class Example {
     public static void main(String[] args) throws SQLException {
@@ -38,17 +39,34 @@ public class Example {
         System.out.println("Loading 1000000 rows");
 
         CopyManager copyManager = new CopyManager((BaseConnection) conn);
-        // TODO use binary format
-        CopyIn copyIn = copyManager.copyIn("COPY items (embedding) FROM STDIN");
+        CopyIn copyIn = copyManager.copyIn("COPY items (embedding) FROM STDIN WITH (FORMAT BINARY)");
+
+        // write header
+        // https://www.postgresql.org/docs/current/sql-copy.html
+        byte[] buffer = new byte[32768];
+        byte[] signature = new byte[] {80, 71, 67, 79, 80, 89, 10, (byte)255, 13, 10, 0};
+        System.arraycopy(signature, 0, buffer, 0, signature.length);
+        ByteConverter.int4(buffer, 11, 0);
+        ByteConverter.int4(buffer, 15, 0);
+        copyIn.writeToCopy(buffer, 0, 19);
+
         for (int i = 0; i < rows; i++) {
             PGvector embedding = new PGvector(embeddings.get(i));
-            byte[] bytes = (embedding.getValue() + "\n").getBytes();
-            copyIn.writeToCopy(bytes, 0, bytes.length);
+
+            // write row
+            ByteConverter.int2(buffer, 0, 1);
+            ByteConverter.int4(buffer, 2, embedding.lengthInBytes());
+            embedding.toBytes(buffer, 6);
+            copyIn.writeToCopy(buffer, 0, 6 + embedding.lengthInBytes());
 
             if (i % 10000 == 0) {
                 System.out.print(".");
             }
         }
+
+        // write trailer
+        ByteConverter.int2(buffer, 0, -1);
+        copyIn.writeToCopy(buffer, 0, 2);
         copyIn.endCopy();
 
         System.out.println("\nSuccess!");
