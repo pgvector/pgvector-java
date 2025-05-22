@@ -10,6 +10,7 @@ import org.postgresql.copy.CopyIn;
 import org.postgresql.copy.CopyManager;
 import org.postgresql.core.BaseConnection;
 import org.postgresql.util.ByteConverter;
+import org.postgresql.util.PGBinaryObject;
 
 public class Example {
     public static void main(String[] args) throws SQLException {
@@ -50,13 +51,20 @@ public class Example {
         copyIn.writeToCopy(buffer, 0, 19);
 
         for (int i = 0; i < rows; i++) {
-            PGvector embedding = new PGvector(embeddings.get(i));
+            PGBinaryObject[] values = {new PGvector(embeddings.get(i))};
 
             // write row
-            ByteConverter.int2(buffer, 0, 1);
-            ByteConverter.int4(buffer, 2, embedding.lengthInBytes());
-            embedding.toBytes(buffer, 6);
-            copyIn.writeToCopy(buffer, 0, 6 + embedding.lengthInBytes());
+            ByteConverter.int2(buffer, 0, values.length);
+            int pos = 2;
+            for (int j = 0; j < values.length; j++) {
+                PGBinaryObject value = values[j];
+                int len = value.lengthInBytes();
+                ByteConverter.int4(buffer, pos, len);
+                pos += 4;
+                value.toBytes(buffer, pos);
+                pos += len;
+            }
+            copyIn.writeToCopy(buffer, 0, pos);
 
             // show progress
             if (i % 10000 == 0) {
