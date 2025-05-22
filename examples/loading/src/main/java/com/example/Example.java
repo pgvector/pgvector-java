@@ -59,6 +59,7 @@ public class Example {
             embedding.toBytes(buffer, 6);
             copyIn.writeToCopy(buffer, 0, 6 + embedding.lengthInBytes());
 
+            // show progress
             if (i % 10000 == 0) {
                 System.out.print(".");
             }
