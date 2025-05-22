@@ -54,8 +54,9 @@ public class Example {
             PGBinaryObject[] values = {new PGvector(embeddings.get(i))};
 
             // write row
-            ByteConverter.int2(buffer, 0, values.length);
-            int pos = 2;
+            int pos = 0;
+            ByteConverter.int2(buffer, pos, values.length);
+            pos += 2;
             for (int j = 0; j < values.length; j++) {
                 PGBinaryObject value = values[j];
                 int len = value.lengthInBytes();
