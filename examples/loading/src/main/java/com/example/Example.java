@@ -37,7 +37,6 @@ public class Example {
 
         // load data
         System.out.println("Loading 1000000 rows");
-
         CopyManager copyManager = new CopyManager((BaseConnection) conn);
         CopyIn copyIn = copyManager.copyIn("COPY items (embedding) FROM STDIN WITH (FORMAT BINARY)");
 
@@ -69,7 +68,6 @@ public class Example {
         ByteConverter.int2(buffer, 0, -1);
         copyIn.writeToCopy(buffer, 0, 2);
         copyIn.endCopy();
-
         System.out.println("\nSuccess!");
 
         // create any indexes *after* loading initial data (skipping for this example)
