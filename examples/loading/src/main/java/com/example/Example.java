@@ -41,13 +41,13 @@ public class Example {
         // TODO use binary format
         CopyIn copyIn = copyManager.copyIn("COPY items (embedding) FROM STDIN");
         for (int i = 0; i < rows; i++) {
-            if (i % 10000 == 0) {
-                System.out.print(".");
-            }
-
             PGvector embedding = new PGvector(embeddings.get(i));
             byte[] bytes = (embedding.getValue() + "\n").getBytes();
             copyIn.writeToCopy(bytes, 0, bytes.length);
+
+            if (i % 10000 == 0) {
+                System.out.print(".");
+            }
         }
         copyIn.endCopy();
 
