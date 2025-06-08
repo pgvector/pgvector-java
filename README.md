@@ -60,7 +60,7 @@ Statement setupStmt = conn.createStatement();
 setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector");
 ```
 
-Register the vector type with your connection
+Register the types with your connection
 
 ```java
 PGvector.registerTypes(conn);
@@ -241,7 +241,7 @@ val setupStmt = conn.createStatement()
 setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector")
 ```
 
-Register the vector type with your connection
+Register the types with your connection
 
 ```kotlin
 PGvector.registerTypes(conn)
@@ -301,7 +301,7 @@ def setupStmt = conn.createStatement()
 setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector")
 ```
 
-Register the vector type with your connection
+Register the types with your connection
 
 ```groovy
 PGvector.registerTypes(conn)
@@ -409,7 +409,7 @@ val setupStmt = conn.createStatement()
 setupStmt.executeUpdate("CREATE EXTENSION IF NOT EXISTS vector")
 ```
 
-Register the vector type with your connection
+Register the types with your connection
 
 ```scala
 PGvector.registerTypes(conn)
