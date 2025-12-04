@@ -25,8 +25,10 @@ jobs:
           make
           sudo make install
       - run: psql -d pgvector_java_test -c "CREATE EXTENSION vector"
+      # Spring JDBC 7 requires Java 17+
+      - if: ${{ matrix.java < 17 }}
+        run: rm src/test/java/com/pgvector/SpringJDBCTest.java
       # Hibernate 7 requires Java 17+
       - if: ${{ matrix.java < 17 }}
-        run: |
-          rm src/test/java/com/pgvector/HibernateTest.java
+        run: rm src/test/java/com/pgvector/HibernateTest.java
       - run: mvn -B -ntp test
