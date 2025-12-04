@@ -98,7 +98,13 @@
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-vector</artifactId>
-            <version>6.6.38.Final</version>
+            <version>7.1.11.Final</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-scan-jandex</artifactId>
+            <version>7.1.11.Final</version>
             <scope>test</scope>
         </dependency>
         <dependency>
