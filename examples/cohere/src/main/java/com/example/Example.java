@@ -35,7 +35,7 @@ public class Example {
         setupStmt.executeUpdate("DROP TABLE IF EXISTS documents");
 
         Statement createStmt = conn.createStatement();
-        createStmt.executeUpdate("CREATE TABLE documents (id bigserial PRIMARY KEY, content text, embedding bit(1536))");
+        createStmt.executeUpdate("CREATE TABLE documents (id bigserial PRIMARY KEY, content text, embedding bit(2048))");
 
         String[] input = {
             "The dog is barking",
@@ -70,7 +70,7 @@ public class Example {
         for (String v : texts) {
             root.withArray("texts").add(v);
         }
-        root.put("model", "embed-v4.0");
+        root.put("model", "embed-v5.0-pro");
         root.put("input_type", inputType);
         root.withArray("embedding_types").add("binary");
         String json = mapper.writeValueAsString(root);
